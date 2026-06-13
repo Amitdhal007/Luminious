@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--MapVC-->
+        <scene sceneID="b3S-qu-1K2">
+            <objects>
+                <viewController storyboardIdentifier="MapVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DfE-As-btr" customClass="MapVC" customModule="Luminious" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Ek-tC-59T">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="skR-Ou-JwF">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="S5V-VI-6Oc">
+                                <rect key="frame" x="330" y="673" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="PAY-pG-MaJ"/>
+                                    <constraint firstAttribute="width" secondItem="S5V-VI-6Oc" secondAttribute="height" id="nCa-jN-zle"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="93U-gk-AOi">
+                                <rect key="frame" x="0.0" y="736" width="393" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="8dP-tD-zmE"/>
+                                </constraints>
+                                <edgeInsets key="layoutMargins" top="0.0" left="15" bottom="0.0" right="15"/>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="S0J-FJ-ZML"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="93U-gk-AOi" firstAttribute="trailing" secondItem="S0J-FJ-ZML" secondAttribute="trailing" id="3fP-Uu-tNc"/>
+                            <constraint firstItem="93U-gk-AOi" firstAttribute="top" secondItem="S5V-VI-6Oc" secondAttribute="bottom" constant="15" id="C54-b6-dzE"/>
+                            <constraint firstItem="S5V-VI-6Oc" firstAttribute="trailing" secondItem="S0J-FJ-ZML" secondAttribute="trailing" constant="-15" id="Kqt-FA-aXS"/>
+                            <constraint firstAttribute="trailing" secondItem="skR-Ou-JwF" secondAttribute="trailing" id="Lhn-jL-zSu"/>
+                            <constraint firstItem="93U-gk-AOi" firstAttribute="leading" secondItem="S0J-FJ-ZML" secondAttribute="leading" id="Xxm-Cr-9vW"/>
+                            <constraint firstItem="93U-gk-AOi" firstAttribute="bottom" secondItem="S0J-FJ-ZML" secondAttribute="bottom" id="ZCj-4R-skj"/>
+                            <constraint firstAttribute="bottom" secondItem="skR-Ou-JwF" secondAttribute="bottom" id="fbb-OJ-1BE"/>
+                            <constraint firstItem="skR-Ou-JwF" firstAttribute="leading" secondItem="7Ek-tC-59T" secondAttribute="leading" id="qQq-Dd-8gA"/>
+                            <constraint firstItem="skR-Ou-JwF" firstAttribute="top" secondItem="7Ek-tC-59T" secondAttribute="top" id="seN-XH-FHL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="arButtonStackView" destination="S5V-VI-6Oc" id="unW-f1-ydb"/>
+                        <outlet property="mapContainerView" destination="skR-Ou-JwF" id="Vfv-jD-4sJ"/>
+                        <outlet property="searchBarStackView" destination="93U-gk-AOi" id="TA9-My-6IF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Awc-FX-bvg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-543" y="-176"/>
+        </scene>
+        <!--Search VehicleVC-->
+        <scene sceneID="NdB-uP-Wvo">
+            <objects>
+                <viewController storyboardIdentifier="SearchVehicleVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cxg-QQ-TBy" customClass="SearchVehicleVC" customModule="Luminious" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="klu-ge-1sK">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wpo-RO-fLu">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mMl-Tq-CV8">
+                                <rect key="frame" x="0.0" y="118" width="393" height="734"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afy-y3-rfO">
+                                        <rect key="frame" x="15" y="20" width="363" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="XNL-RO-6ok"/>
+                                        </constraints>
+                                    </stackView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Orj-6z-fAP">
+                                        <rect key="frame" x="15" y="70" width="363" height="664"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                </subviews>
+                                <edgeInsets key="layoutMargins" top="20" left="15" bottom="0.0" right="15"/>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="bYw-gn-uTD"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="wpo-RO-fLu" secondAttribute="bottom" id="EeJ-pu-qft"/>
+                            <constraint firstItem="wpo-RO-fLu" firstAttribute="leading" secondItem="klu-ge-1sK" secondAttribute="leading" id="Lu4-ig-m0W"/>
+                            <constraint firstAttribute="trailing" secondItem="mMl-Tq-CV8" secondAttribute="trailing" id="OEW-kU-nc9"/>
+                            <constraint firstItem="wpo-RO-fLu" firstAttribute="top" secondItem="klu-ge-1sK" secondAttribute="top" id="Ssm-jg-eKM"/>
+                            <constraint firstItem="mMl-Tq-CV8" firstAttribute="leading" secondItem="klu-ge-1sK" secondAttribute="leading" id="WoD-Md-Mb3"/>
+                            <constraint firstAttribute="trailing" secondItem="wpo-RO-fLu" secondAttribute="trailing" id="Y9s-kM-2KG"/>
+                            <constraint firstItem="mMl-Tq-CV8" firstAttribute="top" secondItem="bYw-gn-uTD" secondAttribute="top" id="fpl-Hm-2tV"/>
+                            <constraint firstAttribute="bottom" secondItem="mMl-Tq-CV8" secondAttribute="bottom" id="wGd-r0-VFf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="glassContainerView" destination="wpo-RO-fLu" id="Vbj-TU-HTo"/>
+                        <outlet property="headerStackView" destination="afy-y3-rfO" id="QnH-JL-7OZ"/>
+                        <outlet property="searchTableView" destination="Orj-6z-fAP" id="8VF-tU-Bzw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uGd-lf-Nfv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="165.64885496183206" y="-176.05633802816902"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

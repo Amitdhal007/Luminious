@@ -122,6 +122,23 @@
 		7E8F4E1A2FDD9CCF0002DDB5 /* NSManagedObjectContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E192FDD9CCF0002DDB5 /* NSManagedObjectContext+Extension.swift */; };
 		7E8F4E1E2FDD9D660002DDB5 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E1D2FDD9D660002DDB5 /* RepositoryError.swift */; };
 		7E8F4E212FDDA01A0002DDB5 /* SessionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E202FDDA01A0002DDB5 /* SessionStatus.swift */; };
+		7E8F4E392FDDB00D0002DDB5 /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E342FDDB00D0002DDB5 /* MapCoordinator.swift */; };
+		7E8F4E3A2FDDB00D0002DDB5 /* DefaultMapFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E362FDDB00D0002DDB5 /* DefaultMapFactory.swift */; };
+		7E8F4E3D2FDDB0190002DDB5 /* MapCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E3C2FDDB0190002DDB5 /* MapCoordinating.swift */; };
+		7E8F4E3F2FDDB05B0002DDB5 /* MapFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E3E2FDDB05B0002DDB5 /* MapFactory.swift */; };
+		7E8F4E462FDDB38C0002DDB5 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E452FDDB38C0002DDB5 /* MapViewModel.swift */; };
+		7E8F4E482FDDB3E20002DDB5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E472FDDB3E20002DDB5 /* MapVC.swift */; };
+		7E8F4E4F2FDDB9660002DDB5 /* LiquidGlassButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E4E2FDDB9660002DDB5 /* LiquidGlassButtonAction.swift */; };
+		7E8F4E512FDDB9860002DDB5 /* LiquidGlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E502FDDB9860002DDB5 /* LiquidGlassButton.swift */; };
+		7E8F4E532FDDB9BF0002DDB5 /* LiquidGlassSearchBarAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E522FDDB9BF0002DDB5 /* LiquidGlassSearchBarAction.swift */; };
+		7E8F4E552FDDB9DD0002DDB5 /* LiquidGlassSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E542FDDB9DD0002DDB5 /* LiquidGlassSearchBar.swift */; };
+		7E8F4E5C2FDDCE370002DDB5 /* SearchVehicleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E5B2FDDCE370002DDB5 /* SearchVehicleVC.swift */; };
+		7E8F4E5E2FDDD42F0002DDB5 /* SearchVehicleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E5D2FDDD42F0002DDB5 /* SearchVehicleViewModel.swift */; };
+		7E8F4E622FDDD47B0002DDB5 /* SearchVehicleCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E612FDDD47B0002DDB5 /* SearchVehicleCoordinating.swift */; };
+		7E8F4E662FDDD8620002DDB5 /* SearchVehicleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E652FDDD8620002DDB5 /* SearchVehicleTableViewCell.swift */; };
+		7E8F4E692FDDD8B60002DDB5 /* SearchVehicleTableViewDataSourceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E682FDDD8B60002DDB5 /* SearchVehicleTableViewDataSourceHandler.swift */; };
+		7E8F4E6B2FDDE4E50002DDB5 /* DarkGlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E6A2FDDE4E50002DDB5 /* DarkGlassButton.swift */; };
+		7E8F4E6D2FDDE97B0002DDB5 /* DarkGlassSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4E6C2FDDE97B0002DDB5 /* DarkGlassSearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -241,6 +258,23 @@
 		7E8F4E192FDD9CCF0002DDB5 /* NSManagedObjectContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extension.swift"; sourceTree = "<group>"; };
 		7E8F4E1D2FDD9D660002DDB5 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
 		7E8F4E202FDDA01A0002DDB5 /* SessionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStatus.swift; sourceTree = "<group>"; };
+		7E8F4E342FDDB00D0002DDB5 /* MapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinator.swift; sourceTree = "<group>"; };
+		7E8F4E362FDDB00D0002DDB5 /* DefaultMapFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMapFactory.swift; sourceTree = "<group>"; };
+		7E8F4E3C2FDDB0190002DDB5 /* MapCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinating.swift; sourceTree = "<group>"; };
+		7E8F4E3E2FDDB05B0002DDB5 /* MapFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFactory.swift; sourceTree = "<group>"; };
+		7E8F4E452FDDB38C0002DDB5 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		7E8F4E472FDDB3E20002DDB5 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		7E8F4E4E2FDDB9660002DDB5 /* LiquidGlassButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassButtonAction.swift; sourceTree = "<group>"; };
+		7E8F4E502FDDB9860002DDB5 /* LiquidGlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassButton.swift; sourceTree = "<group>"; };
+		7E8F4E522FDDB9BF0002DDB5 /* LiquidGlassSearchBarAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassSearchBarAction.swift; sourceTree = "<group>"; };
+		7E8F4E542FDDB9DD0002DDB5 /* LiquidGlassSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassSearchBar.swift; sourceTree = "<group>"; };
+		7E8F4E5B2FDDCE370002DDB5 /* SearchVehicleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVehicleVC.swift; sourceTree = "<group>"; };
+		7E8F4E5D2FDDD42F0002DDB5 /* SearchVehicleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVehicleViewModel.swift; sourceTree = "<group>"; };
+		7E8F4E612FDDD47B0002DDB5 /* SearchVehicleCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVehicleCoordinating.swift; sourceTree = "<group>"; };
+		7E8F4E652FDDD8620002DDB5 /* SearchVehicleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVehicleTableViewCell.swift; sourceTree = "<group>"; };
+		7E8F4E682FDDD8B60002DDB5 /* SearchVehicleTableViewDataSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVehicleTableViewDataSourceHandler.swift; sourceTree = "<group>"; };
+		7E8F4E6A2FDDE4E50002DDB5 /* DarkGlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkGlassButton.swift; sourceTree = "<group>"; };
+		7E8F4E6C2FDDE97B0002DDB5 /* DarkGlassSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkGlassSearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,7 +319,9 @@
 		7E39762F2FDD1601002837A8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				7E3976542FDD294A002837A8 /* BottomRoundedView.swift */,
+				7E8F4E4D2FDDB95A0002DDB5 /* Domain */,
+				7E8F4E4A2FDDB8110002DDB5 /* LiquidGlassViews */,
+				7E8F4E492FDDB7FB0002DDB5 /* RoundCornerView */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -357,6 +393,8 @@
 		7E39763E2FDD1601002837A8 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				7E8F4E442FDDB3330002DDB5 /* Launch */,
+				7E8F4E222FDDAF040002DDB5 /* Map */,
 				7E8F4DDD2FDD60160002DDB5 /* Splash */,
 			);
 			path = Features;
@@ -381,34 +419,16 @@
 				7E3976BA2FDD2CB1002837A8 /* Infrastructure */,
 				7E3976402FDD1601002837A8 /* Resources */,
 				7E3977152FDD36E1002837A8 /* VehicleTracking.xcdatamodeld */,
-				7E39764E2FDD16AE002837A8 /* Views */,
 			);
 			path = Luminious;
 			sourceTree = "<group>";
 		};
-		7E39764E2FDD16AE002837A8 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				7E3976502FDD175A002837A8 /* StoryBoard */,
-				7E39764F2FDD16D5002837A8 /* LaunchScreen */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		7E39764F2FDD16D5002837A8 /* LaunchScreen */ = {
+		7E39764F2FDD16D5002837A8 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
 				7E3976422FDD1601002837A8 /* LaunchScreen.storyboard */,
 			);
-			path = LaunchScreen;
-			sourceTree = "<group>";
-		};
-		7E3976502FDD175A002837A8 /* StoryBoard */ = {
-			isa = PBXGroup;
-			children = (
-				7E8F4DCE2FDD5F4C0002DDB5 /* Map.storyboard */,
-			);
-			path = StoryBoard;
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		7E39765B2FDD2C00002837A8 /* Bus */ = {
@@ -927,7 +947,7 @@
 		7E8F4DDD2FDD60160002DDB5 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				7E8F4DEE2FDD66A40002DDB5 /* Domain */,
+				7E8F4E432FDDB30E0002DDB5 /* Data */,
 				7E8F4DD72FDD60160002DDB5 /* Navigation */,
 				7E8F4DD92FDD60160002DDB5 /* Presentation */,
 				7E8F4DDC2FDD60160002DDB5 /* Resources */,
@@ -1057,6 +1077,165 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		7E8F4E222FDDAF040002DDB5 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E422FDDB3020002DDB5 /* Data */,
+				7E8F4E672FDDD8AB0002DDB5 /* DataSource */,
+				7E8F4E382FDDB00D0002DDB5 /* Navigation */,
+				7E8F4E402FDDB2E50002DDB5 /* Presentation */,
+				7E8F4E412FDDB2F20002DDB5 /* Resource */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		7E8F4E352FDDB00D0002DDB5 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E342FDDB00D0002DDB5 /* MapCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		7E8F4E372FDDB00D0002DDB5 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E3E2FDDB05B0002DDB5 /* MapFactory.swift */,
+				7E8F4E362FDDB00D0002DDB5 /* DefaultMapFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		7E8F4E382FDDB00D0002DDB5 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E352FDDB00D0002DDB5 /* Coordinator */,
+				7E8F4E372FDDB00D0002DDB5 /* Factory */,
+				7E8F4E3B2FDDB0110002DDB5 /* Protocols */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		7E8F4E3B2FDDB0110002DDB5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E3C2FDDB0190002DDB5 /* MapCoordinating.swift */,
+				7E8F4E612FDDD47B0002DDB5 /* SearchVehicleCoordinating.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		7E8F4E402FDDB2E50002DDB5 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E5A2FDDCDF60002DDB5 /* Map */,
+				7E8F4E582FDDCDCC0002DDB5 /* SearchVehicle */,
+				7E8F4E642FDDD8340002DDB5 /* Cell */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		7E8F4E412FDDB2F20002DDB5 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4DCE2FDD5F4C0002DDB5 /* Map.storyboard */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		7E8F4E422FDDB3020002DDB5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E5F2FDDD4570002DDB5 /* Domain */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		7E8F4E432FDDB30E0002DDB5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4DEE2FDD66A40002DDB5 /* Domain */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		7E8F4E442FDDB3330002DDB5 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				7E39764F2FDD16D5002837A8 /* Resource */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		7E8F4E492FDDB7FB0002DDB5 /* RoundCornerView */ = {
+			isa = PBXGroup;
+			children = (
+				7E3976542FDD294A002837A8 /* BottomRoundedView.swift */,
+			);
+			path = RoundCornerView;
+			sourceTree = "<group>";
+		};
+		7E8F4E4A2FDDB8110002DDB5 /* LiquidGlassViews */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E6A2FDDE4E50002DDB5 /* DarkGlassButton.swift */,
+				7E8F4E6C2FDDE97B0002DDB5 /* DarkGlassSearchBar.swift */,
+				7E8F4E502FDDB9860002DDB5 /* LiquidGlassButton.swift */,
+				7E8F4E542FDDB9DD0002DDB5 /* LiquidGlassSearchBar.swift */,
+			);
+			path = LiquidGlassViews;
+			sourceTree = "<group>";
+		};
+		7E8F4E4D2FDDB95A0002DDB5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E4E2FDDB9660002DDB5 /* LiquidGlassButtonAction.swift */,
+				7E8F4E522FDDB9BF0002DDB5 /* LiquidGlassSearchBarAction.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		7E8F4E582FDDCDCC0002DDB5 /* SearchVehicle */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E5B2FDDCE370002DDB5 /* SearchVehicleVC.swift */,
+				7E8F4E5D2FDDD42F0002DDB5 /* SearchVehicleViewModel.swift */,
+			);
+			path = SearchVehicle;
+			sourceTree = "<group>";
+		};
+		7E8F4E5A2FDDCDF60002DDB5 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E472FDDB3E20002DDB5 /* MapVC.swift */,
+				7E8F4E452FDDB38C0002DDB5 /* MapViewModel.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		7E8F4E5F2FDDD4570002DDB5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		7E8F4E642FDDD8340002DDB5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E652FDDD8620002DDB5 /* SearchVehicleTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		7E8F4E672FDDD8AB0002DDB5 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F4E682FDDD8B60002DDB5 /* SearchVehicleTableViewDataSourceHandler.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1141,18 +1320,22 @@
 				7E3976482FDD1601002837A8 /* SceneDelegate.swift in Sources */,
 				7E3976742FDD2C22002837A8 /* Storyboarded.swift in Sources */,
 				7E8F4DFC2FDD81550002DDB5 /* RouteGenerationService.swift in Sources */,
+				7E8F4E482FDDB3E20002DDB5 /* MapVC.swift in Sources */,
 				7E8F4DA62FDD51C60002DDB5 /* CoreDataStack.swift in Sources */,
 				7E3976762FDD2C22002837A8 /* Storyboarded+Extension.swift in Sources */,
+				7E8F4E4F2FDDB9660002DDB5 /* LiquidGlassButtonAction.swift in Sources */,
 				7E8F4E1A2FDD9CCF0002DDB5 /* NSManagedObjectContext+Extension.swift in Sources */,
 				7E3976772FDD2C22002837A8 /* Coordinating.swift in Sources */,
 				7E3976782FDD2C22002837A8 /* StoryBoard.swift in Sources */,
 				7E3976522FDD2729002837A8 /* SplashVC.swift in Sources */,
+				7E8F4E462FDDB38C0002DDB5 /* MapViewModel.swift in Sources */,
 				7E3976AD2FDD2C95002837A8 /* UIViewController+Navigation.swift in Sources */,
 				7E3976AE2FDD2C95002837A8 /* UInt64+Extension.swift in Sources */,
 				7E8F4DB82FDD54D90002DDB5 /* PlaybackState.swift in Sources */,
 				7E3976AF2FDD2C95002837A8 /* Date+Extension.swift in Sources */,
 				7E3976B22FDD2C95002837A8 /* UITextView+Publisher.swift in Sources */,
 				7E3976B42FDD2C95002837A8 /* UITextField+Publisher.swift in Sources */,
+				7E8F4E662FDDD8620002DDB5 /* SearchVehicleTableViewCell.swift in Sources */,
 				7E8F4E0B2FDD83E40002DDB5 /* DriverSeedData.swift in Sources */,
 				7E3976B52FDD2C95002837A8 /* UIImage+Resize.swift in Sources */,
 				7E8F4DA82FDD52330002DDB5 /* SessionRepository.swift in Sources */,
@@ -1163,6 +1346,7 @@
 				7E3976B92FDD2C95002837A8 /* UIViewController+Alert.swift in Sources */,
 				7E8F4DEB2FDD61B60002DDB5 /* DefaultSplashFactory.swift in Sources */,
 				7E8F4E1E2FDD9D660002DDB5 /* RepositoryError.swift in Sources */,
+				7E8F4E5C2FDDCE370002DDB5 /* SearchVehicleVC.swift in Sources */,
 				7E3976582FDD2BDA002837A8 /* AppContainer.swift in Sources */,
 				7E8F4DF12FDD66C10002DDB5 /* SplashStrings.swift in Sources */,
 				7E3976592FDD2BDA002837A8 /* AppCoordinator.swift in Sources */,
@@ -1170,6 +1354,7 @@
 				7E3976832FDD2C4B002837A8 /* PendingUIActionHandling.swift in Sources */,
 				7E3976842FDD2C4B002837A8 /* PendingUIAction.swift in Sources */,
 				7E3976852FDD2C4B002837A8 /* PendingUIActionHandler.swift in Sources */,
+				7E8F4E3D2FDDB0190002DDB5 /* MapCoordinating.swift in Sources */,
 				7E8F4DF62FDD80D30002DDB5 /* DriverGenerationService.swift in Sources */,
 				7E3976862FDD2C4B002837A8 /* NavigationStyle.swift in Sources */,
 				7E3976F12FDD2CF6002837A8 /* ReverseGeocoder.swift in Sources */,
@@ -1178,7 +1363,9 @@
 				7E3976F32FDD2CF6002837A8 /* ToastView.swift in Sources */,
 				7E3976F42FDD2CF6002837A8 /* HeadingSensoring.swift in Sources */,
 				7E3976F52FDD2CF6002837A8 /* CompassEngine.swift in Sources */,
+				7E8F4E6B2FDDE4E50002DDB5 /* DarkGlassButton.swift in Sources */,
 				7E3976F62FDD2CF6002837A8 /* CompassEngineDelegate.swift in Sources */,
+				7E8F4E6D2FDDE97B0002DDB5 /* DarkGlassSearchBar.swift in Sources */,
 				7E3976F72FDD2CF6002837A8 /* HeadingProcessing.swift in Sources */,
 				7E3976F82FDD2CF6002837A8 /* LocationManager.swift in Sources */,
 				7E8F4E132FDD8BF60002DDB5 /* RouteRepositoryImpl.swift in Sources */,
@@ -1186,12 +1373,14 @@
 				7E8F4DBE2FDD57DB0002DDB5 /* VehicleRepositoryImpl.swift in Sources */,
 				7E3976FA2FDD2CF6002837A8 /* PlaceDisplayMapper.swift in Sources */,
 				7E8F4DAA2FDD52490002DDB5 /* Session.swift in Sources */,
+				7E8F4E552FDDB9DD0002DDB5 /* LiquidGlassSearchBar.swift in Sources */,
 				7E3976FB2FDD2CF6002837A8 /* HeadingSensor.swift in Sources */,
 				7E8F4DAE2FDD52A80002DDB5 /* SessionRepositoryImpl.swift in Sources */,
 				7E8F4E212FDDA01A0002DDB5 /* SessionStatus.swift in Sources */,
 				7E8F4E172FDD9C780002DDB5 /* RoutePointMapper.swift in Sources */,
 				7E3976FC2FDD2CF6002837A8 /* HeadingSensorDelegate.swift in Sources */,
 				7E3976FD2FDD2CF6002837A8 /* ToastStyle.swift in Sources */,
+				7E8F4E532FDDB9BF0002DDB5 /* LiquidGlassSearchBarAction.swift in Sources */,
 				7E3976FE2FDD2CF6002837A8 /* GeocodingServiceing.swift in Sources */,
 				7E3976FF2FDD2CF6002837A8 /* OrientationCorrector.swift in Sources */,
 				7E3977002FDD2CF6002837A8 /* CompassHeading.swift in Sources */,
@@ -1199,6 +1388,7 @@
 				7E8F4DFE2FDD81730002DDB5 /* DefaultRouteGenerationService.swift in Sources */,
 				7E3977022FDD2CF6002837A8 /* ToastPresenting.swift in Sources */,
 				7E3977032FDD2CF6002837A8 /* AddressMapper.swift in Sources */,
+				7E8F4E692FDDD8B60002DDB5 /* SearchVehicleTableViewDataSourceHandler.swift in Sources */,
 				7E3977042FDD2CF6002837A8 /* ToastMain.swift in Sources */,
 				7E8F4E0E2FDD852D0002DDB5 /* RouteGenerationError.swift in Sources */,
 				7E3977052FDD2CF6002837A8 /* DeviceOrientationProvider.swift in Sources */,
@@ -1206,9 +1396,11 @@
 				7E3977062FDD2CF6002837A8 /* PlaceDisplay.swift in Sources */,
 				7E8F4E152FDD9C5F0002DDB5 /* RouteMapper.swift in Sources */,
 				7E3977072FDD2CF6002837A8 /* IconAppleToastView.swift in Sources */,
+				7E8F4E512FDDB9860002DDB5 /* LiquidGlassButton.swift in Sources */,
 				7E3977082FDD2CF6002837A8 /* CGFloat+Radians.swift in Sources */,
 				7E8F4DB62FDD54120002DDB5 /* RoutePoint.swift in Sources */,
 				7E8F4DF82FDD80E90002DDB5 /* DefaultDriverGenerationService.swift in Sources */,
+				7E8F4E5E2FDDD42F0002DDB5 /* SearchVehicleViewModel.swift in Sources */,
 				7E8F4DB42FDD53F00002DDB5 /* Route.swift in Sources */,
 				7E3977092FDD2CF6002837A8 /* GeocodingService.swift in Sources */,
 				7E8F4E012FDD81C90002DDB5 /* MKPolyline+Extension.swift in Sources */,
@@ -1245,7 +1437,11 @@
 				7E8F4DB22FDD53C30002DDB5 /* Vehicle.swift in Sources */,
 				7E39768B2FDD2C77002837A8 /* CLLocation+Extension.swift in Sources */,
 				7E3976552FDD294A002837A8 /* BottomRoundedView.swift in Sources */,
+				7E8F4E622FDDD47B0002DDB5 /* SearchVehicleCoordinating.swift in Sources */,
 				7E3976662FDD2C0A002837A8 /* Coordinate.swift in Sources */,
+				7E8F4E3F2FDDB05B0002DDB5 /* MapFactory.swift in Sources */,
+				7E8F4E392FDDB00D0002DDB5 /* MapCoordinator.swift in Sources */,
+				7E8F4E3A2FDDB00D0002DDB5 /* DefaultMapFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

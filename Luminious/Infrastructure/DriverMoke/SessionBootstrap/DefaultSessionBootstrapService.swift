@@ -45,12 +45,46 @@ final class DefaultSessionBootstrapService:
                 count: session.vehicleCount
             )
 
+        var usedStarts: [CLLocationCoordinate2D] = []
+
         for vehicle in vehicles {
+
+            var startCoordinate: CLLocationCoordinate2D
+
+            repeat {
+
+                startCoordinate =
+                    userLocation.randomCoordinate(
+                        withinKilometers: 3
+                    )
+
+            } while usedStarts.contains(where: {
+
+                let existingLocation =
+                    CLLocation(
+                        latitude: $0.latitude,
+                        longitude: $0.longitude
+                    )
+
+                let newLocation =
+                    CLLocation(
+                        latitude: startCoordinate.latitude,
+                        longitude: startCoordinate.longitude
+                    )
+
+                return existingLocation.distance(
+                    from: newLocation
+                ) < 150
+            })
+
+            usedStarts.append(
+                startCoordinate
+            )
 
             let route =
                 try await routeGenerator
                     .generateRoute(
-                        near: userLocation
+                        near: startCoordinate
                     )
 
             guard let firstPoint =
@@ -95,6 +129,13 @@ final class DefaultSessionBootstrapService:
                     vehicleId:
                         initializedVehicle.id
                 )
+
+            print("""
+            Vehicle \(initializedVehicle.id)
+            Start Lat: \(firstPoint.latitude)
+            Start Lon: \(firstPoint.longitude)
+            Route Points: \(route.routePoints.count)
+            """)
         }
     }
 }

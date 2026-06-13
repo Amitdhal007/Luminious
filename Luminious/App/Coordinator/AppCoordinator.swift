@@ -14,12 +14,6 @@ final class AppCoordinator: Coordinating {
 
     private let loader: LoaderPresenting
 
-    // MARK: - Factories
-
-    private let splashFactory: SplashFactory
-
-   // private let mapFactory: MapFactory
-
     // MARK: - State
 
     private var childCoordinator: Coordinating?
@@ -40,20 +34,6 @@ final class AppCoordinator: Coordinating {
         self.loader = loader
 
         self.window = window
-
-        // MARK: - Factories
-
-        self.splashFactory = DefaultSplashFactory(
-            sessionRepository: container.sessionRepository,
-            toast: toast
-        )
-
-//        self.mapFactory = DefaultMapFactory(
-//            sessionRepository: container.sessionRepository,
-//            vehicleRepository: container.vehicleRepository,
-//            locationManager: container.locationManager,
-//            toast: toast
-//        )
     }
 
     // MARK: - Start
@@ -64,9 +44,9 @@ final class AppCoordinator: Coordinating {
     }
 }
 
-private extension AppCoordinator {
+extension AppCoordinator {
 
-    func showSplashFlow() {
+    private func showSplashFlow() {
 
         let nav = UINavigationController()
 
@@ -74,6 +54,8 @@ private extension AppCoordinator {
 
         let splashFactory = DefaultSplashFactory(
             sessionRepository: container.sessionRepository,
+            sessionBootstrapService: container.sessionBootstrapService,
+            locationProvider: container.locationManager,
             toast: toast
         )
 
@@ -82,12 +64,12 @@ private extension AppCoordinator {
             navigationController: nav,
             onResumeSession: { [weak self] in
                 guard let self else { return }
-                
+
                 showMapFlow()
             },
             onNewSession: { [weak self] _ in
                 guard let self else { return }
-                
+
                 showMapFlow()
             }
         )
@@ -100,36 +82,59 @@ private extension AppCoordinator {
     }
 }
 
-private extension AppCoordinator {
+extension AppCoordinator {
 
-    func showMapFlow() {
+    private func showMapFlow() {
 
-//        let nav =
-//            UINavigationController()
-//
-//        nav.isNavigationBarHidden =
-//            true
-//
-//        let coordinator =
-//            MapCoordinator(
-//                factory: container.mapFactory,
-//                navigationController: nav,
-//                toast: toast,
-//                loader: loader
-//            )
-//
-//        childCoordinator =
-//            coordinator
-//
-//        coordinator.start()
-//
-//        setRoot(nav)
+        let nav =
+            UINavigationController()
+
+        nav.isNavigationBarHidden =
+            true
+
+        let mapFactory =
+            DefaultMapFactory(
+                sessionRepository:
+                    container.sessionRepository,
+                vehicleRepository:
+                    container.vehicleRepository,
+                routeRepository:
+                    container.routeRepository,
+                locationManager:
+                    container.locationManager,
+                eventBus:
+                    container.eventBus,
+                toast:
+                    toast
+            )
+
+        let coordinator =
+            MapCoordinator(
+                factory: mapFactory,
+                navigationController: nav,
+                onFinishSession: {
+                    [weak self] in
+
+                    guard let self else {
+                        return
+                    }
+
+                    showSplashFlow()
+                }
+            )
+
+        childCoordinator =
+            coordinator
+
+        coordinator.start()
+
+        setRoot(nav)
     }
 }
 
-private extension AppCoordinator {
+extension AppCoordinator {
 
-    func setRoot(
+    private func setRoot(
         _ rootController: UIViewController
     ) {
 

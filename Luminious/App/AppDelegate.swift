@@ -61,7 +61,7 @@ private extension AppDelegate {
 
         IQKeyboardManager.shared.isEnabled = true
 
-        IQKeyboardToolbarManager.shared.isEnabled = true
+        IQKeyboardToolbarManager.shared.isEnabled = false
 
         IQKeyboardManager.shared.resignOnTouchOutside = true
     }
