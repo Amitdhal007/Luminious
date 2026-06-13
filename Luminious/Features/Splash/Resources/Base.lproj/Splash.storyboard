@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--SplashVC-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="SplashVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="SplashVC" customModule="Luminious" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qe-1o-CBH" customClass="BottomRoundedView" customModule="Luminious" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="382.33333333333331"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Yat-JV-puS">
+                                        <rect key="frame" x="0.0" y="124" width="440" height="258.33333333333331"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car.2.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KIT-kd-9US">
+                                                <rect key="frame" x="170" y="100.33333333333334" width="100" height="99.333333333333314"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="Rot-aM-93Y"/>
+                                                    <constraint firstAttribute="width" secondItem="KIT-kd-9US" secondAttribute="height" id="piV-RD-4pW"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome Back" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yu-Ad-t16">
+                                                <rect key="frame" x="106.33333333333333" y="200" width="227.66666666666669" height="38.333333333333343"/>
+                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="32"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <edgeInsets key="layoutMargins" top="100" left="20" bottom="20" right="20"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="#ffb800"/>
+                                <constraints>
+                                    <constraint firstItem="Yat-JV-puS" firstAttribute="leading" secondItem="3Qe-1o-CBH" secondAttribute="leading" id="1ls-uI-ys2"/>
+                                    <constraint firstAttribute="bottom" secondItem="Yat-JV-puS" secondAttribute="bottom" id="Ucu-T0-eye"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yat-JV-puS" secondAttribute="trailing" id="r3T-Dt-wNG"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BVY-oE-Q3O">
+                                <rect key="frame" x="0.0" y="774" width="440" height="114"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXU-0f-fiB">
+                                        <rect key="frame" x="20" y="0.0" width="400" height="52"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Resume Session">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="baseBackgroundColor" name="#ffb800"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="resumeSessionButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vQQ-CY-Afk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ErZ-Oq-kNi">
+                                        <rect key="frame" x="20" y="62" width="400" height="52"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="YhC-dI-uKF"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="New Session">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="baseBackgroundColor" name="#ffb800"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="newSessionButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VIq-m0-d8g"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <edgeInsets key="layoutMargins" top="0.0" left="20" bottom="0.0" right="20"/>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="3Qe-1o-CBH" secondAttribute="trailing" id="5It-vp-LZj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="Yat-JV-puS" secondAttribute="top" id="HfN-dp-8de"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BVY-oE-Q3O" secondAttribute="bottom" id="WNt-xd-DQq"/>
+                            <constraint firstItem="3Qe-1o-CBH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="h2Y-9N-SGx"/>
+                            <constraint firstItem="3Qe-1o-CBH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="jEI-je-m1n"/>
+                            <constraint firstItem="BVY-oE-Q3O" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lJF-mY-iCe"/>
+                            <constraint firstAttribute="trailing" secondItem="BVY-oE-Q3O" secondAttribute="trailing" id="lLx-u2-lr6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="newSessionButton" destination="ErZ-Oq-kNi" id="Q4x-Nt-W6b"/>
+                        <outlet property="resumeSessionButton" destination="zXU-0f-fiB" id="wVL-IE-NSe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="141" y="131"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="car.2.fill" catalog="system" width="128" height="82"/>
+        <namedColor name="#ffb800">
+            <color red="1" green="0.72156862745098038" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
