@@ -5,8 +5,8 @@ final class MapViewModel {
 
     // MARK: - Published State
 
-    private(set) var vehicles: [Vehicle] = []
-    
+    var vehicles: [Vehicle] = []
+
     // MARK: - Dependencies
 
     private let sessionRepository: SessionRepository
@@ -19,6 +19,18 @@ final class MapViewModel {
 
     let eventBus: AppEventDispatching
 
+    private let simulationService:
+        VehicleSimulationService
+
+    // MARK: - Publishers
+
+    var vehiclesPublisher:
+        AnyPublisher<[Vehicle], Never> {
+
+        simulationService
+            .vehiclesPublisher
+    }
+
     // MARK: - Init
 
     init(
@@ -26,7 +38,8 @@ final class MapViewModel {
         vehicleRepository: VehicleRepository,
         routeRepository: RouteRepository,
         locationManager: LocationProviding,
-        eventBus: AppEventDispatching
+        eventBus: AppEventDispatching,
+        vehicleSimulationService: VehicleSimulationService
     ) {
 
         self.sessionRepository =
@@ -43,8 +56,13 @@ final class MapViewModel {
 
         self.eventBus =
             eventBus
+
+        self.simulationService =
+            vehicleSimulationService
     }
 }
+
+// MARK: - Session
 
 extension MapViewModel {
 
@@ -55,6 +73,8 @@ extension MapViewModel {
             .fetchLatest()
     }
 }
+
+// MARK: - Vehicles
 
 extension MapViewModel {
 
@@ -70,7 +90,26 @@ extension MapViewModel {
 
         self.vehicles =
             vehicles
-        
+
         return vehicles
+    }
+}
+
+// MARK: - Simulation Control
+
+extension MapViewModel {
+
+    func startSimulation(
+        sessionId: UUID
+    ) {
+
+        simulationService.start(
+            sessionId: sessionId
+        )
+    }
+
+    func stopSimulation() {
+
+        simulationService.stop()
     }
 }

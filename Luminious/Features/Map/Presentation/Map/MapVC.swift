@@ -12,6 +12,11 @@ final class MapVC: UIViewController {
     Set<AnyCancellable>()
     
     internal var mapView: MKMapView!
+
+    private var annotationMap:
+        [UUID: VehicleAnnotation] = [:]
+
+    private var currentSessionId: UUID?
     
     private let searchBar =
     LiquidGlassSearchBar()
@@ -143,7 +148,28 @@ private extension MapVC {
     }
     
     func bindVehicles() {
-        
+
+        viewModel
+            .vehiclesPublisher
+            .drop(while: { $0.isEmpty })
+            .receive(
+                on: DispatchQueue.main
+            )
+            .sink { [weak self] vehicles in
+
+                guard let self else {
+                    return
+                }
+
+                viewModel.vehicles = vehicles
+
+                animateVehicleUpdates(
+                    vehicles
+                )
+            }
+            .store(
+                in: &cancellables
+            )
     }
     
     func bindEvents() {
@@ -179,15 +205,21 @@ private extension MapVC {
 private extension MapVC {
     
     func handleScreenWillAppear() {
-        
-        // Start timers
-        // Subscribe to live vehicle updates
+
+        guard let sessionId =
+            currentSessionId
+        else {
+            return
+        }
+
+        viewModel.startSimulation(
+            sessionId: sessionId
+        )
     }
     
     func handleScreenWillDisappear() {
-        
-        // Stop timers
-        // Cancel long running work
+
+        viewModel.stopSimulation()
     }
 }
 
@@ -300,13 +332,6 @@ private extension MapVC {
     func updateVehicleAnnotations(
         _ vehicles: [Vehicle]
     ) {
-        print("Vehicle count: \(vehicles.count)")
-
-        vehicles.forEach { vehicle in
-            print(
-                "Vehicle \(vehicle.id): lat=\(vehicle.currentLatitude), lon=\(vehicle.currentLongitude)"
-            )
-        }
 
         let existingAnnotations =
             mapView.annotations.filter {
@@ -317,18 +342,102 @@ private extension MapVC {
             existingAnnotations
         )
 
-        let annotations =
-            vehicles.map {
+        annotationMap = [:]
+
+        for vehicle in vehicles {
+
+            let annotation =
                 VehicleAnnotation(
-                    vehicle: $0
+                    vehicle: vehicle
                 )
+
+            annotationMap[vehicle.id] =
+                annotation
+
+            mapView.addAnnotation(
+                annotation
+            )
+        }
+    }
+}
+
+// MARK: - Smooth Animation
+
+private extension MapVC {
+
+    func animateVehicleUpdates(
+        _ vehicles: [Vehicle]
+    ) {
+
+        for vehicle in vehicles {
+
+            guard let annotation =
+                annotationMap[vehicle.id]
+            else {
+
+                // New vehicle appeared — add it
+                let newAnnotation =
+                    VehicleAnnotation(
+                        vehicle: vehicle
+                    )
+
+                annotationMap[vehicle.id] =
+                    newAnnotation
+
+                mapView.addAnnotation(
+                    newAnnotation
+                )
+
+                continue
             }
 
-        print("Annotation count: \(annotations.count)")
+            let newCoordinate =
+                CLLocationCoordinate2D(
+                    latitude:
+                        vehicle.currentLatitude,
+                    longitude:
+                        vehicle.currentLongitude
+                )
 
-        mapView.addAnnotations(
-            annotations
-        )
+            let heading =
+                vehicle.currentHeading
+
+            let annotationView =
+                mapView.view(
+                    for: annotation
+                )
+
+            // Duration matches tick interval
+            // exactly — no gap, no overlap.
+            // .beginFromCurrentState ensures
+            // new animations blend from the
+            // current interpolated position
+            // instead of snapping.
+            UIView.animate(
+                withDuration: 5.0,
+                delay: 0,
+                options: [
+                    .curveLinear,
+                    .beginFromCurrentState,
+                    .allowUserInteraction
+                ]
+            ) {
+
+                annotation.coordinate =
+                    newCoordinate
+
+                // Rotate to match heading
+                let radians =
+                    CGFloat(
+                        heading * .pi / 180
+                    )
+
+                annotationView?.transform =
+                    CGAffineTransform(
+                        rotationAngle: radians
+                    )
+            }
+        }
     }
 }
 
@@ -336,9 +445,11 @@ final class VehicleAnnotation:
     NSObject,
     MKAnnotation {
     
+    let vehicleId: UUID
+
     let vehicle: Vehicle
     
-    var coordinate:
+    dynamic var coordinate:
     CLLocationCoordinate2D
     
     var title: String? {
@@ -352,6 +463,9 @@ final class VehicleAnnotation:
     init(
         vehicle: Vehicle
     ) {
+
+        self.vehicleId =
+            vehicle.id
         
         self.vehicle =
         vehicle
@@ -382,14 +496,22 @@ private extension MapVC {
                 else {
                     return
                 }
+
+                currentSessionId = session.id
                 
-                let vehicle = try await viewModel
+                let vehicles = try await viewModel
                     .loadVehicles(
                         sessionId: session.id
                     )
                 
                 self
-                    .updateVehicleAnnotations(vehicle)
+                    .updateVehicleAnnotations(
+                        vehicles
+                    )
+
+                viewModel.startSimulation(
+                    sessionId: session.id
+                )
                 
             } catch {
                 

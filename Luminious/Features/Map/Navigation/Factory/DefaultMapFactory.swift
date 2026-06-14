@@ -20,13 +20,17 @@ final class DefaultMapFactory: MapFactory {
     private let toast:
         ToastPresenting
 
+    private let vehicleSimulationService:
+        VehicleSimulationService
+
     init(
         sessionRepository: SessionRepository,
         vehicleRepository: VehicleRepository,
         routeRepository: RouteRepository,
         locationManager: LocationProviding,
         eventBus: AppEventDispatching,
-        toast: ToastPresenting
+        toast: ToastPresenting,
+        vehicleSimulationService: VehicleSimulationService
     ) {
 
         self.sessionRepository =
@@ -46,6 +50,9 @@ final class DefaultMapFactory: MapFactory {
 
         self.toast =
             toast
+
+        self.vehicleSimulationService =
+            vehicleSimulationService
     }
 }
 extension DefaultMapFactory {
@@ -76,7 +83,9 @@ extension DefaultMapFactory {
                 locationManager:
                     locationManager,
                 eventBus:
-                    eventBus
+                    eventBus,
+                vehicleSimulationService:
+                    vehicleSimulationService
             )
 
         return vc

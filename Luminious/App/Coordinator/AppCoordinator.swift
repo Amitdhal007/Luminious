@@ -105,7 +105,9 @@ extension AppCoordinator {
                 eventBus:
                     container.eventBus,
                 toast:
-                    toast
+                    toast,
+                vehicleSimulationService:
+                    container.vehicleSimulationService
             )
 
         let coordinator =

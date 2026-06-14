@@ -81,6 +81,8 @@
 		7E3977132FDD2CF6002837A8 /* ToastQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3976E52FDD2CF6002837A8 /* ToastQueue.swift */; };
 		7E3977142FDD2CF6002837A8 /* LocationProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3976CE2FDD2CF6002837A8 /* LocationProviding.swift */; };
 		7E3977172FDD36E1002837A8 /* VehicleTracking.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7E3977152FDD36E1002837A8 /* VehicleTracking.xcdatamodeld */; };
+		7E6CE86C2FDE820F00F30949 /* DefaultVehicleSimulationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6CE8692FDE820F00F30949 /* DefaultVehicleSimulationService.swift */; };
+		7E6CE86D2FDE820F00F30949 /* VehicleSimulationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6CE86A2FDE820F00F30949 /* VehicleSimulationService.swift */; };
 		7E8F4DA42FDD4E890002DDB5 /* CoreDataContextProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4DA32FDD4E890002DDB5 /* CoreDataContextProvider.swift */; };
 		7E8F4DA62FDD51C60002DDB5 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4DA52FDD51C60002DDB5 /* CoreDataStack.swift */; };
 		7E8F4DA82FDD52330002DDB5 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F4DA72FDD52330002DDB5 /* SessionRepository.swift */; };
@@ -218,6 +220,8 @@
 		7E3976ED2FDD2CF6002837A8 /* ToastPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresenter.swift; sourceTree = "<group>"; };
 		7E3976EE2FDD2CF6002837A8 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		7E3977162FDD36E1002837A8 /* VehicleTracking.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VehicleTracking.xcdatamodel; sourceTree = "<group>"; };
+		7E6CE8692FDE820F00F30949 /* DefaultVehicleSimulationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVehicleSimulationService.swift; sourceTree = "<group>"; };
+		7E6CE86A2FDE820F00F30949 /* VehicleSimulationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleSimulationService.swift; sourceTree = "<group>"; };
 		7E8F4DA32FDD4E890002DDB5 /* CoreDataContextProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataContextProvider.swift; sourceTree = "<group>"; };
 		7E8F4DA52FDD51C60002DDB5 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		7E8F4DA72FDD52330002DDB5 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
@@ -785,6 +789,15 @@
 			path = ToastManager;
 			sourceTree = "<group>";
 		};
+		7E6CE86B2FDE820F00F30949 /* Simulation */ = {
+			isa = PBXGroup;
+			children = (
+				7E6CE8692FDE820F00F30949 /* DefaultVehicleSimulationService.swift */,
+				7E6CE86A2FDE820F00F30949 /* VehicleSimulationService.swift */,
+			);
+			path = Simulation;
+			sourceTree = "<group>";
+		};
 		7E8F4DA22FDD4E680002DDB5 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -974,6 +987,7 @@
 		7E8F4DF42FDD80A70002DDB5 /* DriverMoke */ = {
 			isa = PBXGroup;
 			children = (
+				7E6CE86B2FDE820F00F30949 /* Simulation */,
 				7E8F4E0C2FDD85240002DDB5 /* Error */,
 				7E8F4E072FDD83C00002DDB5 /* Model */,
 				7E8F4E022FDD82070002DDB5 /* SessionBootstrap */,
@@ -1421,6 +1435,8 @@
 				7E3977142FDD2CF6002837A8 /* LocationProviding.swift in Sources */,
 				7E8F4DED2FDD63210002DDB5 /* SplashViewModel.swift in Sources */,
 				7E8F4DC12FDD58470002DDB5 /* VehicleMapper.swift in Sources */,
+				7E6CE86C2FDE820F00F30949 /* DefaultVehicleSimulationService.swift in Sources */,
+				7E6CE86D2FDE820F00F30949 /* VehicleSimulationService.swift in Sources */,
 				7E3976612FDD2C00002837A8 /* AppEvent.swift in Sources */,
 				7E8F4DCA2FDD5A850002DDB5 /* LoaderPresenter.swift in Sources */,
 				7E8F4DCB2FDD5A850002DDB5 /* LoaderPresenting.swift in Sources */,
