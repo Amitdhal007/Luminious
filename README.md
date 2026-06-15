@@ -4,7 +4,7 @@
     <strong>Real-Time Vehicle Fleet Telemetry & Simulation Platform for iOS</strong>
   </p>
   <p align="center">
-    <img src="https://img.shields.io/badge/Platform-iOS%2026.0+-000000?style=flat-square&logo=apple&logoColor=white" />
+    <img src="https://img.shields.io/badge/Platform-iOS%2026.1+-000000?style=flat-square&logo=apple&logoColor=white" />
     <img src="https://img.shields.io/badge/Xcode-26.2+-147EFB?style=flat-square&logo=xcode&logoColor=white" />
     <img src="https://img.shields.io/badge/Swift-6.0-FA7343?style=flat-square&logo=swift&logoColor=white" />
     <img src="https://img.shields.io/badge/Architecture-MVVM--C-0D9488?style=flat-square" />
@@ -36,7 +36,7 @@
 
 All data — including sessions, vehicles, routes, and coordinate telemetry — is persisted locally using **CoreData** (SQLite-backed). The interface showcases a premium, modern design language with Apple's native **Liquid Glass** (`UIGlassEffect`) components, delivering a polished, production-grade user experience.
 
-> **⚠️ Important:** This application requires **iOS 26.0+** and **Xcode 26.2+** to compile and run, due to dependencies on native `UIGlassEffect` APIs and latest UIKit rendering features.
+> **⚠️ Important:** This application requires **iOS 26.1+** and **Xcode 26.2+** to compile and run, due to dependencies on native `UIGlassEffect` APIs and latest UIKit rendering features.
 
 ---
 
