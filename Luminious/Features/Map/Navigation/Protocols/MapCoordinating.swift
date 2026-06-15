@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 protocol MapCoordinating:
     AnyObject
@@ -7,6 +7,11 @@ protocol MapCoordinating:
 
     func mapDidRequestVehicleSearch(
         vehicles: [Vehicle]
+    )
+
+    func mapDidRequestVehicleDetails(
+        session: Session,
+        vehicle: Vehicle
     )
 
     func mapDidFinishSession()

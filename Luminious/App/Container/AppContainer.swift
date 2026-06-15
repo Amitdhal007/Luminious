@@ -57,14 +57,17 @@ extension AppContainer {
             RouteRepositoryImpl(
                 contextProvider: coreDataStack
             )
-        
+
         let driverRepository = DefaultDriverGenerationService()
+        
         let reverseGeocoder = ReverseGeocoder()
         let geoCoding = GeocodingService(geocoder: reverseGeocoder)
-        let defaultRouteGeneratorRepostiory = DefaultRouteGenerationService(geocodingService: geoCoding)
+        let defaultRouteGeneratorRepostiory = DefaultRouteGenerationService(
+            geocodingService: geoCoding
+        )
 
         let sessionBootstrapService =
-        DefaultSessionBootstrapService(
+            DefaultSessionBootstrapService(
                 vehicleRepository: vehicleRepository,
                 routeRepository: routeRepository,
                 driverGenerator: driverRepository,
@@ -74,7 +77,8 @@ extension AppContainer {
         let vehicleSimulationService =
             DefaultVehicleSimulationService(
                 vehicleRepository: vehicleRepository,
-                routeRepository: routeRepository
+                routeRepository: routeRepository,
+                sessionRepository: sessionRepository
             )
 
         return AppContainer(

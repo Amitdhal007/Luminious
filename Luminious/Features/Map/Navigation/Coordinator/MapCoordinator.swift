@@ -39,25 +39,32 @@ final class MapCoordinator:
 }
 extension MapCoordinator: MapCoordinating {
 
-    func mapDidRequestVehicleSearch(vehicles: [Vehicle]) {
+    func mapDidRequestVehicleSearch(
+        vehicles: [Vehicle]
+    ) {
 
-        let searchVC = factory.makeSearchVehicleScreen(
-            vehicles: vehicles
-        )
+        let searchVC =
+            factory.makeSearchVehicleScreen(
+                vehicles: vehicles
+            )
 
-        if let sheet = searchVC.sheetPresentationController {
+        if let sheet =
+            searchVC.sheetPresentationController {
 
             sheet.detents = [
                 .medium(),
-                .large(),
+                .large()
             ]
-
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 24
 
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+
+            if #available(iOS 26.1, *) {
+                sheet.applyGlassAppearance(
+                    cornerRadius: 32
+                )
+            }
         }
 
         navigationController.present(
@@ -67,10 +74,48 @@ extension MapCoordinator: MapCoordinating {
     }
 
     func mapDidRequestAR() {
-        print("AR requested from map")
+
     }
 
     func mapDidFinishSession() {
         onFinishSession()
+    }
+}
+extension MapCoordinator {
+
+    func mapDidRequestVehicleDetails(
+        session: Session,
+        vehicle: Vehicle
+    ) {
+
+        let vc =
+            factory.makeVehicleDetailsScreen(
+                session: session,
+                vehicle: vehicle
+            )
+
+        if let sheet =
+            vc.sheetPresentationController {
+
+            sheet.detents = [
+                .medium(),
+                .large()
+            ]
+
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+
+            if #available(iOS 26.1, *) {
+                sheet.applyGlassAppearance(
+                    cornerRadius: 32
+                )
+            }
+        }
+
+        navigationController.present(
+            vc,
+            animated: true
+        )
     }
 }

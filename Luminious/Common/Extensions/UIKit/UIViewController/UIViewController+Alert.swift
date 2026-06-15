@@ -50,4 +50,69 @@ extension UIViewController {
             )
         }
     }
+
+    @MainActor
+    func showLocationPermissionAlert() {
+
+        let alert =
+            UIAlertController(
+                title:
+                    LocationPermissionStrings
+                    .title,
+
+                message:
+                    LocationPermissionStrings
+                    .message,
+
+                preferredStyle:
+                    .alert
+            )
+
+        alert.addAction(
+            UIAlertAction(
+                title:
+                    LocationPermissionStrings
+                    .cancel,
+
+                style:
+                    .cancel
+            )
+        )
+
+        alert.addAction(
+            UIAlertAction(
+                title:
+                    LocationPermissionStrings
+                    .settings,
+
+                style:
+                    .default
+            ) { _ in
+
+                guard
+                    let url =
+                        URL(
+                            string:
+                                UIApplication
+                                .openSettingsURLString
+                        )
+                else {
+                    return
+                }
+
+                UIApplication
+                    .shared
+                    .open(
+                        url
+                    )
+            }
+        )
+
+        present(
+            alert,
+            animated:
+                true
+        )
+    }
+
 }

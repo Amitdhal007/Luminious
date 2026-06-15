@@ -37,6 +37,60 @@ extension MKPolyline {
     }
 }
 
+//private extension MKPolyline {
+//
+//    static func heading(
+//        currentIndex: Int,
+//        coordinates: [CLLocationCoordinate2D]
+//    ) -> Double {
+//
+//        guard currentIndex <
+//                coordinates.count - 1
+//        else {
+//            return 0
+//        }
+//
+//        let start =
+//            coordinates[currentIndex]
+//
+//        let end =
+//            coordinates[currentIndex + 1]
+//
+//        let lat1 =
+//            start.latitude * .pi / 180
+//
+//        let lon1 =
+//            start.longitude * .pi / 180
+//
+//        let lat2 =
+//            end.latitude * .pi / 180
+//
+//        let lon2 =
+//            end.longitude * .pi / 180
+//
+//        let y =
+//            sin(lon2 - lon1)
+//            *
+//            cos(lat2)
+//
+//        let x =
+//            cos(lat1)
+//            *
+//            sin(lat2)
+//            -
+//            sin(lat1)
+//            *
+//            cos(lat2)
+//            *
+//            cos(lon2 - lon1)
+//
+//        return atan2(
+//            y,
+//            x
+//        ) * 180 / .pi
+//    }
+//}
+
 private extension MKPolyline {
 
     static func heading(
@@ -68,25 +122,29 @@ private extension MKPolyline {
         let lon2 =
             end.longitude * .pi / 180
 
+        let deltaLon =
+            lon2 - lon1
+
         let y =
-            sin(lon2 - lon1)
-            *
+            sin(deltaLon) *
             cos(lat2)
 
         let x =
-            cos(lat1)
-            *
+            cos(lat1) *
             sin(lat2)
             -
-            sin(lat1)
-            *
-            cos(lat2)
-            *
-            cos(lon2 - lon1)
+            sin(lat1) *
+            cos(lat2) *
+            cos(deltaLon)
 
-        return atan2(
-            y,
-            x
-        ) * 180 / .pi
+        var bearing =
+            atan2(y, x) *
+            180 / .pi
+
+        if bearing < 0 {
+            bearing += 360
+        }
+
+        return bearing
     }
 }

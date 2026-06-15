@@ -34,8 +34,6 @@ final class SearchVehicleViewModel {
 
         self.eventBus =
             eventBus
-        
-        print("gbfhfhfh: \(vehicles.count)")
     }
 }
 extension SearchVehicleViewModel {

@@ -40,14 +40,14 @@ extension LoaderPresenter {
 
         let indicatorView =
             UIActivityIndicatorView(
-                style: .large
+                style: .medium
             )
 
         indicatorView.translatesAutoresizingMaskIntoConstraints =
             false
 
         indicatorView.color =
-            .ffb800
+            .white
 
         overlayView.addSubview(
             indicatorView

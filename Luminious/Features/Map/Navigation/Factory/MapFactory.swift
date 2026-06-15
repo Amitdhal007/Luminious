@@ -9,4 +9,9 @@ protocol MapFactory {
     func makeSearchVehicleScreen(
         vehicles: [Vehicle]
     ) -> SearchVehicleVC
+
+    func makeVehicleDetailsScreen(
+        session: Session,
+        vehicle: Vehicle
+    ) -> VehicleDetailsVC
 }
