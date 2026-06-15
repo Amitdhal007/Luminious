@@ -1,157 +1,181 @@
+import Combine
+import CoreLocation
 import UIKit
-internal import _LocationEssentials
 
 final class SplashVC: UIViewController {
-    
+
     public var toast: ToastPresenting!
     public var viewModel: SplashViewModel!
     public weak var coordinator: SplashCoordinating?
-    
-    @IBOutlet weak var resumeSessionButton: UIButton!
-    @IBOutlet weak var newSessionButton: UIButton!
-    
+
+    private var cancellables = Set<AnyCancellable>()
+
+    private let resumeButton = LiquidGlassTextButton(
+        text: "Resume Session"
+    )
+
+    private let newSessionButton = LiquidGlassTextButton(
+        text: "New Session"
+    )
+
+    @IBOutlet weak var bottomButtonContainer: UIStackView!
+    @IBOutlet weak var loopVideoView: IntroVideoView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         initialSetup()
     }
-    
-    @IBAction func resumeSessionButtonTapped(_ sender: UIButton) {
-        
-        handleResumeSessionTapped()
-    }
-    
-    @IBAction func newSessionButtonTapped(_ sender: UIButton) {
-        
-        handleNewSessionTapped()
-    }
 }
+extension SplashVC {
 
-private extension SplashVC {
-    
-    func initialSetup() {
-        
-        setButtonsEnabled(true)
-        
+    private func initialSetup() {
+
+        loopVideoView.playIntro(
+            named: "introVideo"
+        )
+
+        setupGlassButtons()
+
         loadSessionState()
     }
-    
+
     @MainActor
-    func updateUI(
-        hasPreviousSession: Bool
-    ) {
-        
-        resumeSessionButton.isHidden =
-        !hasPreviousSession
-        
-        newSessionButton.isHidden =
-        false
+    private func updateUI(hasPreviousSession: Bool) {
+
+        resumeButton.isHidden = !hasPreviousSession
+        newSessionButton.isHidden = false
     }
-    
-    @MainActor
-    func setButtonsEnabled(
-        _ enabled: Bool
-    ) {
-        
-        newSessionButton.isEnabled =
-        enabled
-        
-        resumeSessionButton.isEnabled =
-        enabled
+
+    private func setupGlassButtons() {
+
+        bottomButtonContainer.axis = .vertical
+        bottomButtonContainer.spacing = 12
+        bottomButtonContainer.alignment = .fill
+        bottomButtonContainer.distribution = .fillEqually
+
+        bottomButtonContainer.addArrangedSubview(resumeButton)
+        bottomButtonContainer.addArrangedSubview(newSessionButton)
+
+        bindGlassButtons()
+    }
+
+    private func bindGlassButtons() {
+
+        resumeButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self else { return }
+
+                handleResumeSessionTapped()
+            }
+            .store(in: &cancellables)
+
+        newSessionButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self else { return }
+
+                handleNewSessionTapped()
+            }
+            .store(in: &cancellables)
     }
 }
+extension SplashVC {
 
-private extension SplashVC {
-    
-    func loadSessionState() {
-        
+    private func loadSessionState() {
+
         toast.show(
             style: .info,
-            title:
-                SplashStrings
-                .loadingSessionTitle,
-            subtitle:
-                SplashStrings
-                .loadingSessionSubtitle
+            title: SplashStrings.loadingSessionTitle,
+            subtitle: SplashStrings.loadingSessionSubtitle
         )
-        
+
         Task { [weak self] in
-            
-            guard let self else {
+
+            guard let self
+            else {
                 return
             }
-            
+
             do {
-                
+
                 let hasPreviousSession =
-                try await viewModel
+                    try await viewModel
                     .hasPreviousSession()
-                
+
                 updateUI(
                     hasPreviousSession:
                         hasPreviousSession
                 )
-                
+
             } catch {
-                
+
                 updateUI(
-                    hasPreviousSession:
-                        false
+                    hasPreviousSession: false
                 )
-                
+
                 await MainActor.run { [weak self] in
-                    
-                    guard let self else {
+
+                    guard let self
+                    else {
                         return
                     }
-                    
+
                     toast.show(
                         style: .error,
-                        title:
-                            SplashStrings
-                            .sessionLoadFailedTitle,
-                        subtitle:
-                            error
-                            .localizedDescription
+                        title: SplashStrings.sessionLoadFailedTitle,
+                        subtitle: error.localizedDescription
                     )
                 }
             }
         }
     }
 }
+extension SplashVC {
 
-private extension SplashVC {
-    
-    func handleNewSessionTapped() {
-        
+    private func handleNewSessionTapped() {
+
         Task { @MainActor in
-            
-            guard let vehicleCount =
-                    await showVehicleCountPicker()
+
+            guard
+                viewModel.locationProvider.isLocationEnabled()
             else {
+                newSessionButton.finishLoading()
+                showLocationPermissionAlert()
                 return
             }
-            
-            do {
-                
-                let session =
-                try await viewModel
-                    .createNewSession(
-                        vehicleCount: vehicleCount
-                    )
-                
-                try await viewModel.bootstrapSession(session,
-                                     userLocation: .init(
-                                        latitude: viewModel.locationProvider.currentLocation.coordinate.latitude,
-                                        longitude: viewModel.locationProvider.currentLocation.coordinate.longitude))
 
-                coordinator?
-                    .splashDidCreateNewSession(
-                        session
+            guard
+                let vehicleCount = await showVehicleCountPicker()
+            else {
+                newSessionButton.finishLoading()
+                return
+            }
+
+            do {
+
+                let location = try await viewModel.locationProvider
+                    .getCurrentLocation()
+
+                let session = try await viewModel.createNewSession(
+                    vehicleCount: vehicleCount
+                )
+
+                try await viewModel.bootstrapSession(
+                    session,
+                    userLocation: .init(
+                        latitude: location.coordinate.latitude,
+                        longitude: location.coordinate.longitude
                     )
-                
+                )
+
+                newSessionButton.finishLoading()
+
+                coordinator?.splashDidCreateNewSession(session)
+
             } catch {
-                
+
+                newSessionButton.finishLoading()
+
                 toast.show(
                     style: .error,
                     title: SplashStrings.sessionCreationFailed,
@@ -160,10 +184,38 @@ private extension SplashVC {
             }
         }
     }
-    
-    func handleResumeSessionTapped() {
-        
-        coordinator?
-            .splashDidRequestResumeSession()
+
+    private func handleResumeSessionTapped() {
+
+        Task { @MainActor in
+
+            guard
+                viewModel.locationProvider.isLocationEnabled()
+            else {
+                resumeButton.finishLoading()
+                showLocationPermissionAlert()
+                return
+            }
+
+            do {
+
+                let _ = try await viewModel.locationProvider
+                    .getCurrentLocation()
+
+                resumeButton.finishLoading()
+
+                coordinator?.splashDidRequestResumeSession()
+
+            } catch {
+
+                resumeButton.finishLoading()
+
+                toast.show(
+                    style: .error,
+                    title: SplashStrings.sessionCreationFailed,
+                    subtitle: error.localizedDescription
+                )
+            }
+        }
     }
 }

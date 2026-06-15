@@ -1,101 +1,90 @@
 import UIKit
 
+/// Factory responsible for constructing all Map module screens.
+///
+/// Responsibilities:
+/// - Inject dependencies into ViewControllers
+/// - Build ViewModels
+/// - Keep Coordinator free from object creation logic
 final class DefaultMapFactory: MapFactory {
 
-    private let sessionRepository:
-        SessionRepository
+    // MARK: - Dependencies
 
-    private let vehicleRepository:
-        VehicleRepository
+    private let dependencies: MapDependencies
 
-    private let routeRepository:
-        RouteRepository
+    // MARK: - Init
 
-    private let locationManager:
-        LocationProviding
-
-    private let eventBus:
-        AppEventDispatching
-
-    private let toast:
-        ToastPresenting
-
-    init(
-        sessionRepository: SessionRepository,
-        vehicleRepository: VehicleRepository,
-        routeRepository: RouteRepository,
-        locationManager: LocationProviding,
-        eventBus: AppEventDispatching,
-        toast: ToastPresenting
-    ) {
-
-        self.sessionRepository =
-            sessionRepository
-
-        self.vehicleRepository =
-            vehicleRepository
-
-        self.routeRepository =
-            routeRepository
-
-        self.locationManager =
-            locationManager
-
-        self.eventBus =
-            eventBus
-
-        self.toast =
-            toast
+    init(dependencies: MapDependencies) {
+        self.dependencies = dependencies
     }
 }
 extension DefaultMapFactory {
 
+    /// Creates the main Map screen with fully injected dependencies.
     func makeMapScreen(
         coordinator: MapCoordinating
-    ) -> MapVC {
+    ) -> UIViewController {
 
-        let vc =
-            MapVC.getVC(
-                from: .map
-            )
+        let vc = MapVC.getVC(from: .map)
 
-        vc.coordinator =
-            coordinator
+        // MARK: - Coordinator Injection
+        vc.coordinator = coordinator
 
-        vc.toast =
-            toast
+        // MARK: - UI Utilities
+        vc.toast = dependencies.toast
+        vc.loader = dependencies.loader
 
-        vc.viewModel =
-            MapViewModel(
-                sessionRepository:
-                    sessionRepository,
-                vehicleRepository:
-                    vehicleRepository,
-                routeRepository:
-                    routeRepository,
-                locationManager:
-                    locationManager,
-                eventBus:
-                    eventBus
-            )
+        // MARK: - ViewModel Composition
+        vc.viewModel = MapViewModel(
+            sessionRepository: dependencies.sessionRepository,
+            vehicleRepository: dependencies.vehicleRepository,
+            routeRepository: dependencies.routeRepository,
+            locationManager: dependencies.locationManager,
+            eventBus: dependencies.eventBus,
+            vehicleSimulationService: dependencies.vehicleSimulationService,
+            sessionBootstrapService: dependencies.sessionBootstrapService
+        )
 
         return vc
     }
 }
 extension DefaultMapFactory {
 
+    /// Creates vehicle search screen used in Map flow.
     func makeSearchVehicleScreen(
-        vehicles: [Vehicle]
-    ) -> SearchVehicleVC {
+        vehicles: [Vehicle],
+    ) -> UIViewController {
 
-        let vc =
-        SearchVehicleVC.getVC(from: .map)
+        let vc = SearchVehicleVC.getVC(from: .map)
 
-        vc.viewModel =
-            SearchVehicleViewModel(
-                vehicles: vehicles,
-                eventBus: eventBus
-            )
+        vc.viewModel = SearchVehicleViewModel(
+            vehicles: vehicles,
+            eventBus: dependencies.eventBus
+        )
+
+        return vc
+    }
+}
+extension DefaultMapFactory {
+
+    /// Creates vehicle details screen with session context.
+    func makeVehicleDetailsScreen(
+        session: Session,
+        vehicle: Vehicle
+    ) -> UIViewController {
+
+        let vc = VehicleDetailsVC.getVC(from: .map)
+
+        // MARK: - UI Dependencies
+        vc.toast = dependencies.toast
+
+        // MARK: - ViewModel Composition
+        vc.viewModel = VehicleDetailsViewModel(
+            vehicle: vehicle,
+            session: session,
+            routeRepository: dependencies.routeRepository,
+            vehicleRepository: dependencies.vehicleRepository
+        )
 
         return vc
     }

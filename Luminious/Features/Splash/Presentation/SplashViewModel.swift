@@ -1,11 +1,11 @@
-import Foundation
 import CoreLocation
+import Foundation
 
 final class SplashViewModel {
 
     private let sessionRepository: SessionRepository
     private let sessionBootstrapService: SessionBootstrapService
-    
+
     let locationProvider: LocationProviding
 
     init(
@@ -30,16 +30,22 @@ final class SplashViewModel {
         vehicleCount: Int
     ) async throws -> Session {
 
+        let now = Date()
+
         let session = Session(
             id: UUID(),
             name: "Vehicle Tracking Session",
-            status: SessionStatus.created.rawValue,
+            status: .running,
             vehicleCount: vehicleCount,
-            createdAt: .now,
-            updatedAt: .now
+            createdAt: now,
+            updatedAt: now,
+            tripStartedAt: now,
+            tripEndedAt: nil
         )
 
-        try await sessionRepository.create(session: session)
+        try await sessionRepository.create(
+            session: session
+        )
 
         return session
     }

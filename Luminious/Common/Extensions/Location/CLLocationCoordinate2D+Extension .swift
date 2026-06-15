@@ -62,4 +62,49 @@ extension CLLocationCoordinate2D {
                 lon2 * 180 / .pi
         )
     }
+    
+    func heading(
+            to destination:
+                CLLocationCoordinate2D
+        ) -> CLLocationDirection {
+
+            let lat1 =
+                latitude * .pi / 180
+
+            let lon1 =
+                longitude * .pi / 180
+
+            let lat2 =
+                destination.latitude * .pi / 180
+
+            let lon2 =
+                destination.longitude * .pi / 180
+
+            let dLon =
+                lon2 - lon1
+
+            let y =
+                sin(dLon) * cos(lat2)
+
+            let x =
+                cos(lat1) * sin(lat2)
+                -
+                sin(lat1)
+                *
+                cos(lat2)
+                *
+                cos(dLon)
+
+            let bearing =
+                atan2(y, x)
+
+            var degrees =
+                bearing * 180 / .pi
+
+            if degrees < 0 {
+                degrees += 360
+            }
+
+            return degrees
+        }
 }

@@ -40,14 +40,14 @@ extension LoaderPresenter {
 
         let indicatorView =
             UIActivityIndicatorView(
-                style: .large
+                style: .medium
             )
 
         indicatorView.translatesAutoresizingMaskIntoConstraints =
             false
 
         indicatorView.color =
-            .ffb800
+            .white
 
         overlayView.addSubview(
             indicatorView
@@ -61,7 +61,7 @@ extension LoaderPresenter {
 
             indicatorView.centerYAnchor.constraint(
                 equalTo: overlayView.centerYAnchor
-            )
+            ),
         ])
 
         overlayView.layer.zPosition = 9998
