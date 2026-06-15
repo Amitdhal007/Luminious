@@ -1,23 +1,20 @@
-import Foundation
 import Combine
+import Foundation
 
 final class SearchVehicleViewModel {
 
     // MARK: - Published
 
     @Published
-    private(set) var vehicles:
-        [Vehicle]
+    private(set) var vehicles: [Vehicle]
 
     // MARK: - Dependencies
 
-    let eventBus:
-        AppEventDispatching
+    let eventBus: AppEventDispatching
 
     // MARK: - Storage
 
-    private let allVehicles:
-        [Vehicle]
+    private let allVehicles: [Vehicle]
 
     // MARK: - Init
 
@@ -64,11 +61,11 @@ extension SearchVehicleViewModel {
                     .lowercased()
                     .contains(searchText)
 
-                ||
+                    ||
 
-                $0.vehicleNumber
-                    .lowercased()
-                    .contains(searchText)
+                    $0.vehicleNumber
+                        .lowercased()
+                        .contains(searchText)
             }
     }
 }

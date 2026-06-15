@@ -9,20 +9,16 @@ final class DefaultVehicleSimulationService:
 
     private enum Constants {
 
-        static let tickInterval:
-            TimeInterval = 5.0
+        static let tickInterval: TimeInterval = 5.0
     }
 
     // MARK: - Dependencies
 
-    private let sessionRepository:
-        SessionRepository
+    private let sessionRepository: SessionRepository
 
-    private let vehicleRepository:
-        VehicleRepository
+    private let vehicleRepository: VehicleRepository
 
-    private let routeRepository:
-        RouteRepository
+    private let routeRepository: RouteRepository
 
     // MARK: - State
 
@@ -30,8 +26,7 @@ final class DefaultVehicleSimulationService:
 
     private var sessionId: UUID?
 
-    private var routeCache:
-        [UUID: Route] = [:]
+    private var routeCache: [UUID: Route] = [:]
 
     private let vehiclesSubject =
         CurrentValueSubject<
@@ -39,9 +34,7 @@ final class DefaultVehicleSimulationService:
             Never
         >([])
 
-    var vehiclesPublisher:
-        AnyPublisher<[Vehicle], Never>
-    {
+    var vehiclesPublisher: AnyPublisher<[Vehicle], Never> {
         vehiclesSubject
             .eraseToAnyPublisher()
     }
@@ -83,17 +76,17 @@ final class DefaultVehicleSimulationService:
 
                 let vehicles =
                     try await vehicleRepository
-                        .fetchVehicles(
-                            sessionId: sessionId
-                        )
+                    .fetchVehicles(
+                        sessionId: sessionId
+                    )
 
                 for vehicle in vehicles {
 
-                    guard let route =
-                        try await routeRepository
+                    guard
+                        let route =
+                            try await routeRepository
                             .fetchRoute(
-                                vehicleId:
-                                    vehicle.id
+                                for: vehicle.id
                             )
                     else {
                         continue
@@ -117,9 +110,9 @@ final class DefaultVehicleSimulationService:
             } catch {
 
                 #if DEBUG
-                print(
-                    "Route start failed"
-                )
+                    print(
+                        "Route start failed"
+                    )
                 #endif
             }
         }
@@ -147,9 +140,9 @@ final class DefaultVehicleSimulationService:
 
 // MARK: - Tick Logic
 
-private extension DefaultVehicleSimulationService {
+extension DefaultVehicleSimulationService {
 
-    func tick() {
+    fileprivate func tick() {
 
         guard let sessionId
         else {
@@ -167,10 +160,10 @@ private extension DefaultVehicleSimulationService {
 
                 let vehicles =
                     try await vehicleRepository
-                        .fetchVehicles(
-                            sessionId:
-                                sessionId
-                        )
+                    .fetchVehicles(
+                        sessionId:
+                            sessionId
+                    )
 
                 let activeVehicles =
                     vehicles.filter {
@@ -186,15 +179,15 @@ private extension DefaultVehicleSimulationService {
 
                 let updatedVehicles =
                     try await vehicleRepository
-                        .fetchVehicles(
-                            sessionId:
-                                sessionId
-                        )
+                    .fetchVehicles(
+                        sessionId:
+                            sessionId
+                    )
 
                 let allCompleted =
                     !updatedVehicles
-                        .isEmpty &&
-                    updatedVehicles
+                    .isEmpty
+                    && updatedVehicles
                         .allSatisfy {
                             !$0.isActive
                         }
@@ -208,12 +201,12 @@ private extension DefaultVehicleSimulationService {
                 }
 
                 await MainActor.run { [weak self] in
-                    
+
                     guard let self
                     else {
                         return
                     }
- 
+
                     vehiclesSubject.send(
                         updatedVehicles
                     )
@@ -222,9 +215,9 @@ private extension DefaultVehicleSimulationService {
             } catch {
 
                 #if DEBUG
-                print(
-                    "Simulation error: \(error)"
-                )
+                    print(
+                        "Simulation error: \(error)"
+                    )
                 #endif
             }
         }
@@ -233,18 +226,19 @@ private extension DefaultVehicleSimulationService {
 
 // MARK: - Vehicle Advancement
 
-private extension DefaultVehicleSimulationService {
+extension DefaultVehicleSimulationService {
 
-    func advanceVehicle(
+    fileprivate func advanceVehicle(
         _ vehicle: Vehicle
     ) async {
 
         do {
 
-            guard let route =
-                try await fetchRoute(
-                    for: vehicle
-                )
+            guard
+                let route =
+                    try await fetchRoute(
+                        for: vehicle
+                    )
             else {
                 return
             }
@@ -266,8 +260,7 @@ private extension DefaultVehicleSimulationService {
                     points.count - 1
                 )
 
-            guard nextIndex >
-                currentIndex
+            guard nextIndex > currentIndex
             else {
 
                 vehicle.isActive =
@@ -307,9 +300,7 @@ private extension DefaultVehicleSimulationService {
             vehicle.updatedAt =
                 .now
 
-            if nextIndex >=
-                points.count - 1
-            {
+            if nextIndex >= points.count - 1 {
 
                 vehicle.isActive =
                     false
@@ -328,30 +319,31 @@ private extension DefaultVehicleSimulationService {
         } catch {
 
             #if DEBUG
-            print(
-                "Advance failed"
-            )
+                print(
+                    "Advance failed"
+                )
             #endif
         }
     }
 
-    func fetchRoute(
+    fileprivate func fetchRoute(
         for vehicle: Vehicle
     ) async throws -> Route? {
 
         if let cached =
             routeCache[
                 vehicle.id
-            ] {
+            ]
+        {
             return cached
         }
 
         let route =
             try await routeRepository
-                .fetchRoute(
-                    vehicleId:
-                        vehicle.id
-                )
+            .fetchRoute(
+                for:
+                    vehicle.id
+            )
 
         if let route {
 
@@ -363,16 +355,17 @@ private extension DefaultVehicleSimulationService {
         return route
     }
 
-    func completeRoute(
+    fileprivate func completeRoute(
         for vehicle: Vehicle
     ) async {
 
         do {
 
-            guard let route =
-                try await routeRepository
+            guard
+                let route =
+                    try await routeRepository
                     .fetchRoute(
-                        vehicleId:
+                        for:
                             vehicle.id
                     )
             else {
@@ -401,24 +394,24 @@ private extension DefaultVehicleSimulationService {
         } catch {
 
             #if DEBUG
-            print(
-                "Complete route failed"
-            )
+                print(
+                    "Complete route failed"
+                )
             #endif
         }
     }
 
-    func finishSession(
+    fileprivate func finishSession(
         sessionId: UUID
     ) async {
 
         do {
 
-            guard let session =
-                try await sessionRepository
+            guard
+                let session =
+                    try await sessionRepository
                     .fetchLatest(),
-                  session.id ==
-                    sessionId
+                session.id == sessionId
             else {
                 return
             }
@@ -436,9 +429,9 @@ private extension DefaultVehicleSimulationService {
         } catch {
 
             #if DEBUG
-            print(
-                "Finish session failed"
-            )
+                print(
+                    "Finish session failed"
+                )
             #endif
         }
     }

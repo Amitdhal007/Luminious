@@ -15,7 +15,7 @@ final class SearchVehicleTableViewCell:
                 UIGlassEffect(
                     style: .clear
                 )
-            
+
             effect.tintColor = .black.withAlphaComponent(0.2)
 
             let view =
@@ -105,7 +105,7 @@ extension SearchVehicleTableViewCell {
 
         driverLabel.translatesAutoresizingMaskIntoConstraints =
             false
-        
+
         driverLabel.textColor = .white
 
         driverLabel.font =

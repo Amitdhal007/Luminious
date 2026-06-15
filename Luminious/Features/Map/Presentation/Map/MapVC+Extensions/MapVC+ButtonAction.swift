@@ -1,6 +1,6 @@
 import Combine
-import UIKit
 import CoreLocation
+import UIKit
 
 extension MapVC {
 
@@ -32,43 +32,43 @@ extension MapVC {
                 else {
                     return
                 }
-                
+
                 handleNewSessionTapped()
             }
             .store(in: &cancellables)
     }
 }
 extension MapVC {
-    
+
     private func handleNewSessionTapped() {
-        
+
         Task { @MainActor in
-            
+
             guard
                 viewModel.locationManager.isLocationEnabled()
             else {
                 showLocationPermissionAlert()
                 return
             }
-            
+
             guard
                 let vehicleCount = await showVehicleCountPicker()
             else {
                 return
             }
-            
+
             do {
-                
+
                 loader.show()
                 defer { loader.hide() }
-                
+
                 let location = try await viewModel.locationManager
                     .getCurrentLocation()
-                
+
                 let session = try await viewModel.createNewSession(
                     vehicleCount: vehicleCount
                 )
-                
+
                 try await viewModel.bootstrapSession(
                     session,
                     userLocation: .init(
@@ -76,7 +76,7 @@ extension MapVC {
                         longitude: location.coordinate.longitude
                     )
                 )
-                
+
                 guard
                     let session =
                         try await viewModel
@@ -100,9 +100,9 @@ extension MapVC {
                 viewModel.startSimulation(
                     sessionId: session.id
                 )
-                
+
             } catch {
-                
+
                 toast.show(
                     style: .error,
                     title: SplashStrings.sessionCreationFailed,

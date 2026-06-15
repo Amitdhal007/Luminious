@@ -21,7 +21,7 @@ final class MapVC: UIViewController {
         LiquidGlassButton(
             image: UIImage(systemName: "arkit")
         )
-    
+
     internal let dynamicVehicleButton =
         LiquidGlassButton(
             image: UIImage(systemName: "slider.horizontal.3")

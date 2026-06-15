@@ -5,7 +5,7 @@ extension MapVC {
     public func loadVehicles() {
 
         Task { @MainActor [weak self] in
-            
+
             guard let self else { return }
 
             do {

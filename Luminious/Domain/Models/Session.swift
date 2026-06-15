@@ -1,24 +1,25 @@
 import Foundation
 
+/// Represents a session that tracks a trip lifecycle and vehicle allocation.
+///
+/// Design intent:
+/// - Encapsulates session lifecycle (created → running → completed)
+/// - Maintains consistent timestamps for state transitions
+/// - Ensures domain behavior is controlled through methods
 final class Session {
 
     let id: UUID
-
     let name: String
-
-    var status: SessionStatus
-
-    var vehicleCount: Int
-
     let createdAt: Date
 
-    var updatedAt: Date
+    private(set) var status: SessionStatus
+    private(set) var vehicleCount: Int
+    private(set) var updatedAt: Date
 
     // MARK: - Trip Lifecycle
 
-    var tripStartedAt: Date?
-
-    var tripEndedAt: Date?
+    private(set) var tripStartedAt: Date?
+    private(set) var tripEndedAt: Date?
 
     init(
         id: UUID,
@@ -39,18 +40,32 @@ final class Session {
         self.tripStartedAt = tripStartedAt
         self.tripEndedAt = tripEndedAt
     }
+}
+extension Session {
 
-    // MARK: - Actions
+    /// Starts the trip if session is in valid state
+    func startTrip() {
 
-    public func startTrip() {
+        guard status == .created else { return }
+
         status = .running
         tripStartedAt = Date()
         updatedAt = Date()
     }
 
-    public func endTrip() {
+    /// Ends the trip if currently running
+    func endTrip() {
+
+        guard status == .running else { return }
+
         status = .completed
         tripEndedAt = Date()
+        updatedAt = Date()
+    }
+
+    /// Updates vehicle count safely
+    func updateVehicleCount(_ count: Int) {
+        vehicleCount = count
         updatedAt = Date()
     }
 }

@@ -3,13 +3,13 @@ import UIKit
 extension SearchVehicleVC {
 
     public func setupGlassContainer() {
-        
+
         let glassEffect = UIGlassEffect(
             style: .clear
         )
-        
+
         glassEffect.tintColor = .white.withAlphaComponent(0.1)
-        
+
         let glassContainer =
             UIVisualEffectView(
                 effect: glassEffect

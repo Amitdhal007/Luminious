@@ -20,9 +20,9 @@ public class AppleToastView: UIView, ToastView {
 
         let glassEffect = UIGlassEffect(style: .clear)
         glassEffect.tintColor = .black.withAlphaComponent(0.2)
-        
+
         visualEffectView = .init(effect: glassEffect)
-        
+
         addSubview(visualEffectView)
 
         addSubview(child)
@@ -75,7 +75,7 @@ public class AppleToastView: UIView, ToastView {
         }
 
         addSubviewConstraints()
-        
+
         DispatchQueue.main.async {
             self.style()
         }

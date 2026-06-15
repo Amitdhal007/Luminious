@@ -1,28 +1,24 @@
 import Foundation
 
+/// Domain entity representing a Route in the system.
+///
+/// A Route defines a path between a source and destination,
+/// and tracks its lifecycle (created → running → completed).
 final class Route {
 
     let id: UUID
-
     let routeName: String
-
     let totalDistance: Double
-
     let estimatedDuration: Double
-
     let createdAt: Date
 
     let sourceAddress: String?
-
     let destinationAddress: String?
-
-    var status: RouteStatus
-
     let routePoints: [RoutePoint]
 
-    var startedAt: Date?
-
-    var completedAt: Date?
+    private(set) var status: RouteStatus
+    private(set) var startedAt: Date?
+    private(set) var completedAt: Date?
 
     init(
         id: UUID,
@@ -37,7 +33,6 @@ final class Route {
         completedAt: Date?,
         routePoints: [RoutePoint]
     ) {
-
         self.id = id
         self.routeName = routeName
         self.totalDistance = totalDistance
@@ -52,22 +47,23 @@ final class Route {
     }
 }
 
-// MARK: - Actions
-
 extension Route {
 
-    public func start() {
+    /// Starts the route if it is not already running or completed.
+    func start() {
+
+        guard status == .created else { return }
 
         status = .running
-
-        if startedAt == nil {
-            startedAt = .now
-        }
+        startedAt = startedAt ?? Date()
     }
 
-    public func complete() {
+    /// Marks the route as completed if it is currently running.
+    func complete() {
+
+        guard status == .running else { return }
 
         status = .completed
-        completedAt = .now
+        completedAt = Date()
     }
 }

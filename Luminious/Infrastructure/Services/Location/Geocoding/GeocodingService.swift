@@ -27,9 +27,11 @@ final class GeocodingService: GeocodingServiceing {
         _ location: CLLocation
     ) async throws -> String? {
 
-        guard let mapItem = try await geocoder.fetchMapItem(
-            for: location
-        ) else {
+        guard
+            let mapItem = try await geocoder.fetchMapItem(
+                for: location
+            )
+        else {
             return nil
         }
 
@@ -42,9 +44,11 @@ final class GeocodingService: GeocodingServiceing {
         _ location: CLLocation
     ) async throws -> String? {
 
-        guard let mapItem = try await geocoder.fetchMapItem(
-            for: location
-        ) else {
+        guard
+            let mapItem = try await geocoder.fetchMapItem(
+                for: location
+            )
+        else {
             return nil
         }
 
@@ -57,9 +61,11 @@ final class GeocodingService: GeocodingServiceing {
         _ location: CLLocation
     ) async throws -> Address? {
 
-        guard let mapItem = try await geocoder.fetchMapItem(
-            for: location
-        ) else {
+        guard
+            let mapItem = try await geocoder.fetchMapItem(
+                for: location
+            )
+        else {
             return nil
         }
 

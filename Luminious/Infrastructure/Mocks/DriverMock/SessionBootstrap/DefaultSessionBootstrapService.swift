@@ -1,19 +1,14 @@
 import CoreLocation
 
-final class DefaultSessionBootstrapService:
-    SessionBootstrapService {
+final class DefaultSessionBootstrapService: SessionBootstrapService {
 
-    private let vehicleRepository:
-        VehicleRepository
+    private let vehicleRepository: VehicleRepository
 
-    private let driverGenerator:
-        DriverGenerationService
+    private let driverGenerator: DriverGenerationService
 
-    private let routeGenerator:
-        RouteGenerationService
+    private let routeGenerator: RouteGenerationService
 
-    private let routeRepository:
-        RouteRepository
+    private let routeRepository: RouteRepository
 
     init(
         vehicleRepository: VehicleRepository,
@@ -21,18 +16,10 @@ final class DefaultSessionBootstrapService:
         driverGenerator: DriverGenerationService,
         routeGenerator: RouteGenerationService
     ) {
-
-        self.vehicleRepository =
-            vehicleRepository
-
-        self.routeRepository =
-            routeRepository
-
-        self.driverGenerator =
-            driverGenerator
-
-        self.routeGenerator =
-            routeGenerator
+        self.vehicleRepository = vehicleRepository
+        self.routeRepository = routeRepository
+        self.driverGenerator = driverGenerator
+        self.routeGenerator = routeGenerator
     }
 
     func bootstrap(
@@ -52,12 +39,10 @@ final class DefaultSessionBootstrapService:
             var startCoordinate: CLLocationCoordinate2D
 
             repeat {
-
                 startCoordinate =
                     userLocation.randomCoordinate(
                         withinKilometers: 3
                     )
-
             } while usedStarts.contains(where: {
 
                 let existingLocation =
@@ -96,47 +81,37 @@ final class DefaultSessionBootstrapService:
             let initializedVehicle =
                 Vehicle(
                     id: vehicle.id,
-                    driverName:
-                        vehicle.driverName,
+                    driverName: vehicle.driverName,
                     driverAvatarURL: vehicle.driverAvatarURL,
-                    vehicleNumber:
-                        vehicle.vehicleNumber,
-                    vehicleType:
-                        vehicle.vehicleType,
-                    rating:
-                        vehicle.rating,
-                    currentLatitude:
-                        firstPoint.latitude,
-                    currentLongitude:
-                        firstPoint.longitude,
-                    currentHeading:
-                        firstPoint.heading,
+                    vehicleNumber: vehicle.vehicleNumber,
+                    vehicleType: vehicle.vehicleType,
+                    rating: vehicle.rating,
+                    currentLatitude: firstPoint.latitude,
+                    currentLongitude: firstPoint.longitude,
+                    currentHeading: firstPoint.heading,
                     currentRouteIndex: 0,
                     isActive: true,
                     updatedAt: .now
                 )
 
-            try await vehicleRepository
-                .create(
-                    vehicle:
-                        initializedVehicle,
-                    sessionId:
-                        session.id
-                )
+            try await vehicleRepository.create(
+                vehicle: initializedVehicle,
+                sessionId: session.id
+            )
 
-            try await routeRepository
-                .create(
-                    route: route,
-                    vehicleId:
-                        initializedVehicle.id
-                )
+            try await routeRepository.create(
+                route: route,
+                for: initializedVehicle.id
+            )
 
-            print("""
-            Vehicle \(initializedVehicle.id)
-            Start Lat: \(firstPoint.latitude)
-            Start Lon: \(firstPoint.longitude)
-            Route Points: \(route.routePoints.count)
-            """)
+            print(
+                """
+                Vehicle \(initializedVehicle.id)
+                Start Lat: \(firstPoint.latitude)
+                Start Lon: \(firstPoint.longitude)
+                Route Points: \(route.routePoints.count)
+                """
+            )
         }
     }
 }

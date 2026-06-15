@@ -3,63 +3,63 @@ import SDWebImage
 import UIKit
 
 extension VehicleDetailsVC {
-    
+
     internal func addMarkers(
         _ coordinates: [CLLocationCoordinate2D]
     ) {
-        
+
         guard
             let first = coordinates.first,
             let last = coordinates.last
         else {
             return
         }
-        
+
         let start =
-        StartAnnotation()
-        
+            StartAnnotation()
+
         start.coordinate =
-        first
-        
+            first
+
         let end =
-        EndAnnotation()
-        
+            EndAnnotation()
+
         end.coordinate =
-        last
-        
+            last
+
         playbackMapView.addAnnotations(
             [
                 start,
-                end
+                end,
             ]
         )
-        
+
         startAnnotation =
-        start
-        
+            start
+
         endAnnotation =
-        end
-        
+            end
+
         createVehicleMarker(
             first
         )
     }
-    
+
     internal func createVehicleMarker(
         _ coordinate: CLLocationCoordinate2D
     ) {
-        
+
         let vehicle =
-        PlayBackVehicleAnnotation()
-        
+            PlayBackVehicleAnnotation()
+
         vehicle.coordinate =
-        coordinate
-        
+            coordinate
+
         playbackMapView.addAnnotation(
             vehicle
         )
-        
+
         vehicleAnnotation =
-        vehicle
+            vehicle
     }
 }

@@ -15,19 +15,15 @@ final class VehicleDetailsViewModel {
 
     internal var route: Route?
 
-    internal var playbackState:
-        PlaybackState = .idle
+    internal var playbackState: PlaybackState = .idle
 
-    internal var playbackTask:
-        Task<Void, Never>?
+    internal var playbackTask: Task<Void, Never>?
 
     // Callbacks
 
-    var onPlaybackMove:
-        ((CLLocationCoordinate2D) -> Void)?
+    var onPlaybackMove: ((CLLocationCoordinate2D) -> Void)?
 
-    var onPlaybackEnd:
-        (() -> Void)?
+    var onPlaybackEnd: (() -> Void)?
 
     // Init
 

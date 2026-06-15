@@ -4,7 +4,7 @@ extension UIViewController: Storyboarded {}
 
 extension Storyboarded where Self: UIViewController {
     
-    static func getVC(from storyboardName: StoryBoard) -> Self {
+    static func getVC(from storyboardName: Storyboard) -> Self {
         let storyboardIdentifier = String(describing: self)
         let storyboard = UIStoryboard(name: storyboardName.rawValue, bundle: Bundle.main)
         guard let nextVC = storyboard.instantiateViewController(withIdentifier: storyboardIdentifier) as? Self

@@ -13,8 +13,8 @@ struct AddressFormatter {
                 includingRegion: false,
                 singleLine: true
             )
-        ?? mapItem.address?.shortAddress
-        ?? ""
+            ?? mapItem.address?.shortAddress
+            ?? ""
     }
 
     func fullAddress(
@@ -28,7 +28,7 @@ struct AddressFormatter {
                 includingRegion: true,
                 singleLine: true
             )
-        ?? mapItem.address?.fullAddress
-        ?? ""
+            ?? mapItem.address?.fullAddress
+            ?? ""
     }
 }

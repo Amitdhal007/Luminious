@@ -3,114 +3,115 @@ import SDWebImage
 import UIKit
 
 extension VehicleDetailsVC {
-    
+
     @MainActor
     internal func configure() {
-        
+
         viewModel.onPlaybackMove = {
             [weak self]
             coordinate in
-            
+
             guard let self
             else {
                 return
             }
-            
+
             playbackAnimationTask?
                 .cancel()
-            
+
             playbackAnimationTask =
-            Task { [weak self] in
-                
-                guard let self,
-                      let vehicleAnnotation
-                else {
-                    return
-                }
-                
-                guard !Task.isCancelled
-                else {
-                    return
-                }
-                
-                let current =
-                vehicleAnnotation.coordinate
-                
-                let heading =
-                current.heading(
-                    to: coordinate
-                )
-                
-                if let vehicleView =
-                    playbackMapView.view(
-                        for: vehicleAnnotation
-                    ) as? PlayBackVehicleAnnotationView {
-                    
-                    vehicleView.updateHeading(
-                        heading,
-                        mapHeading:
-                            playbackMapView.camera.heading
+                Task { [weak self] in
+
+                    guard let self,
+                        let vehicleAnnotation
+                    else {
+                        return
+                    }
+
+                    guard !Task.isCancelled
+                    else {
+                        return
+                    }
+
+                    let current =
+                        vehicleAnnotation.coordinate
+
+                    let heading =
+                        current.heading(
+                            to: coordinate
+                        )
+
+                    if let vehicleView =
+                        playbackMapView.view(
+                            for: vehicleAnnotation
+                        ) as? PlayBackVehicleAnnotationView
+                    {
+
+                        vehicleView.updateHeading(
+                            heading,
+                            mapHeading:
+                                playbackMapView.camera.heading
+                        )
+                    }
+
+                    await animateVehicle(
+                        to: coordinate
                     )
                 }
-                
-                await animateVehicle(
-                    to: coordinate
-                )
-            }
         }
-        
+
         viewModel.onPlaybackEnd = { [weak self] in
-            
+
             guard let self
             else {
                 return
             }
-            
+
             updateTripStatus()
-            
+
             updatePlaybackButtons()
         }
-        
+
         updateTripStatus()
-        
+
         updatePlaybackButtons()
     }
-    
+
     @MainActor
     internal func bind() {
-        
+
         driverNameLabel.text =
-        viewModel.driverName
-        
+            viewModel.driverName
+
         ratingLabel.text =
-        viewModel.rating
-        
+            viewModel.rating
+
         vehicleNumberLabel.text =
-        viewModel.vehicleNumber
-        
+            viewModel.vehicleNumber
+
         vehicleTypeLabel.text =
-        viewModel.vehicleType
-        
+            viewModel.vehicleType
+
         currentLocationLabel.text =
-        viewModel.locationText
-        
+            viewModel.locationText
+
         fromLocationLabel.text =
-        viewModel.fromLocation
-        
+            viewModel.fromLocation
+
         fromTimeLabel.text =
-        viewModel.fromTime
-        
+            viewModel.fromTime
+
         toLocationLabel.text =
-        viewModel.toLocation
-        
+            viewModel.toLocation
+
         toTimeLabel.text =
-        viewModel.toTime
-        
+            viewModel.toTime
+
         tripDateLabel.text =
-        viewModel.tripDate
-        
+            viewModel.tripDate
+
         driverImageView.sd_imageIndicator = SDWebImageActivityIndicator.medium
-        
+
         driverImageView.sd_setImage(
             with: viewModel.vehicle.driverAvatarURL,
             placeholderImage: UIImage(
@@ -118,31 +119,31 @@ extension VehicleDetailsVC {
             )
         )
     }
-    
+
     internal func updateTripStatus() {
-        
+
         createdStatusButton.isHidden =
-        !viewModel.isCreated
-        
+            !viewModel.isCreated
+
         runningStatusButton.isHidden =
-        !viewModel.isRunning
-        
+            !viewModel.isRunning
+
         completedStatusButton.isHidden =
-        !viewModel.isCompleted
-        
+            !viewModel.isCompleted
+
         playbackMapContainer.isHidden =
-        !viewModel.showPlayback
+            !viewModel.showPlayback
     }
-    
+
     internal func updatePlaybackButtons() {
-        
+
         playButton.isHidden =
-        !viewModel.showPlay
-        
+            !viewModel.showPlay
+
         pauseButton.isHidden =
-        !viewModel.showPause
-        
+            !viewModel.showPause
+
         stopButton.isHidden =
-        !viewModel.showStop
+            !viewModel.showStop
     }
 }

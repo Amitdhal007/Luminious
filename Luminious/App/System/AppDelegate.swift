@@ -5,10 +5,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Dependencies
 
-    private let container =
-        AppContainer.makeDefault()
+    /// Central dependency container for the app.
+    /// Provides access to shared services like CoreData and LocationManager.
+    private let container = AppContainer.makeDefault()
 
-    // MARK: - Lifecycle
+    // MARK: - Application Lifecycle
 
     func application(
         _ application: UIApplication,
@@ -16,27 +17,17 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
 
-        configureLocation()
+        configureLocationServices()
 
         return true
     }
 
-    func applicationDidEnterBackground(
-        _ application: UIApplication
-    ) {
-
-        try? container
-            .coreDataStack
-            .saveContext()
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        persistApplicationState()
     }
 
-    func applicationWillTerminate(
-        _ application: UIApplication
-    ) {
-
-        try? container
-            .coreDataStack
-            .saveContext()
+    func applicationWillTerminate(_ application: UIApplication) {
+        persistApplicationState()
     }
 }
 
@@ -44,13 +35,28 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
 
-    func configureLocation() {
+    /// Requests location permissions and triggers initial location fetch.
+    ///
+    /// Assumption:
+    /// - The app only needs "when in use" location permission at launch.
+    /// - LocationManager is already properly configured in AppContainer.
+    func configureLocationServices() {
+        container.locationManager.requestWhenInUseAuthorization()
+        container.locationManager.requestLocation()
+    }
+}
 
-        container.locationManager
-            .requestWhenInUseAuthorization()
+// MARK: - Persistence
 
-        container.locationManager
-            .requestLocation()
+private extension AppDelegate {
+
+    /// Saves Core Data context safely.
+    /// Called when app enters background or is about to terminate.
+    ///
+    /// Assumption:
+    /// - CoreData stack is thread-safe for direct save calls here.
+    func persistApplicationState() {
+        try? container.coreDataStack.saveContext()
     }
 }
 
@@ -58,6 +64,7 @@ private extension AppDelegate {
 
 extension AppDelegate {
 
+    /// Exposes dependency container for other modules (coordinators/view models).
     var appContainer: AppContainer {
         container
     }

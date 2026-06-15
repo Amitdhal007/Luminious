@@ -1,5 +1,15 @@
 import UIKit
 
+/// Root coordinator responsible for controlling the entire application flow.
+///
+/// Responsibilities:
+/// - Manages high-level navigation flows (Splash → Map → Restart flow)
+/// - Owns child coordinators lifecycle
+/// - Switches root view controller when flow changes
+///
+/// Assumptions:
+/// - Only one active flow exists at a time
+/// - AppContainer provides all shared dependencies
 final class AppCoordinator: Coordinating {
 
     // MARK: - Core
@@ -7,13 +17,14 @@ final class AppCoordinator: Coordinating {
     private let window: UIWindow
     private let container: AppContainer
 
-    // MARK: - Presentation
+    // MARK: - UI Services
 
     private let toast: ToastPresenting
     private let loader: LoaderPresenting
 
     // MARK: - State
 
+    /// Currently active child flow coordinator.
     private var childCoordinator: Coordinating?
 
     // MARK: - Init
@@ -36,9 +47,21 @@ final class AppCoordinator: Coordinating {
         showSplashFlow()
     }
 }
-extension AppCoordinator {
 
-    private func showSplashFlow() {
+private extension AppCoordinator {
+
+    /// Replaces current flow and sets a new root navigation controller.
+    func transition(to coordinator: Coordinating, root: UINavigationController) {
+
+        childCoordinator = coordinator
+        coordinator.start()
+        setRoot(root)
+    }
+}
+
+private extension AppCoordinator {
+
+    func showSplashFlow() {
 
         let nav = UINavigationController()
         nav.isNavigationBarHidden = true
@@ -54,58 +77,55 @@ extension AppCoordinator {
             factory: splashFactory,
             navigationController: nav,
             onResumeSession: { [weak self] in
-                guard let self else { return }
-                self.showMapFlow()
+                self?.showMapFlow()
             },
             onNewSession: { [weak self] _ in
-                guard let self else { return }
-                self.showMapFlow()
+                self?.showMapFlow()
             }
         )
 
-        childCoordinator = coordinator
-        coordinator.start()
-
-        setRoot(nav)
+        transition(to: coordinator, root: nav)
     }
 }
-extension AppCoordinator {
 
-    private func showMapFlow() {
+private extension AppCoordinator {
+
+    func showMapFlow() {
 
         let nav = UINavigationController()
         nav.isNavigationBarHidden = true
-
-        let mapFactory = DefaultMapFactory(
+        
+        let dependencies = MapDependencies(
             sessionRepository: container.sessionRepository,
             vehicleRepository: container.vehicleRepository,
             routeRepository: container.routeRepository,
             locationManager: container.locationManager,
+            vehicleSimulationService: container.vehicleSimulationService,
+            sessionBootstrapService: container.sessionBootstrapService,
             eventBus: container.eventBus,
             toast: toast,
-            loader: loader,
-            vehicleSimulationService: container.vehicleSimulationService,
-            sessionBootstrapService: container.sessionBootstrapService
+            loader: loader
+        )
+
+        let mapFactory = DefaultMapFactory(
+            dependencies: dependencies
         )
 
         let coordinator = MapCoordinator(
             factory: mapFactory,
             navigationController: nav,
             onFinishSession: { [weak self] in
-                guard let self else { return }
-                self.showSplashFlow()
+                self?.showSplashFlow()
             }
         )
 
-        childCoordinator = coordinator
-        coordinator.start()
-
-        setRoot(nav)
+        transition(to: coordinator, root: nav)
     }
 }
-extension AppCoordinator {
 
-    private func setRoot(_ rootController: UIViewController) {
+private extension AppCoordinator {
+
+    func setRoot(_ rootController: UIViewController) {
 
         window.rootViewController = rootController
         window.makeKeyAndVisible()
@@ -114,7 +134,7 @@ extension AppCoordinator {
             with: window,
             duration: 0.3,
             options: .transitionCrossDissolve,
-            animations: nil
+            animations: { }
         )
     }
 }

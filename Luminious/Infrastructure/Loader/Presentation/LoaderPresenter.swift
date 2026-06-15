@@ -61,7 +61,7 @@ extension LoaderPresenter {
 
             indicatorView.centerYAnchor.constraint(
                 equalTo: overlayView.centerYAnchor
-            )
+            ),
         ])
 
         overlayView.layer.zPosition = 9998

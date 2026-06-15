@@ -1,23 +1,25 @@
 import Foundation
 
-final class PlaybackState {
+/// Represents the playback state of a vehicle/session timeline.
+///
+/// Design intent:
+/// - Immutable snapshot model
+/// - Prevents accidental state mutation
+/// - Safe for concurrency and reactive pipelines
+struct PlaybackState {
 
     let id: UUID
-
-    var currentPointIndex: Int
-
-    var isPlaying: Bool
-
-    var playbackSpeed: Double
-
-    var updatedAt: Date
+    let currentPointIndex: Int
+    let isPlaying: Bool
+    let playbackSpeed: Double
+    let updatedAt: Date
 
     init(
         id: UUID,
         currentPointIndex: Int,
         isPlaying: Bool,
         playbackSpeed: Double,
-        updatedAt: Date
+        updatedAt: Date = Date()
     ) {
         self.id = id
         self.currentPointIndex = currentPointIndex

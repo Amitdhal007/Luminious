@@ -1,21 +1,26 @@
 import Foundation
 
+/// Repository responsible for managing Vehicle persistence.
+///
+/// Design intent:
+/// - Abstracts persistence layer (CoreData / API / cache)
+/// - Ensures Vehicles are scoped to a Session
+/// - Provides CRUD operations for Vehicle entity
+///
+/// Assumptions:
+/// - A Vehicle belongs to exactly one Session
+/// - Session scoping is required for retrieval operations
 protocol VehicleRepository {
 
-    func create(
-        vehicle: Vehicle,
-        sessionId: UUID
-    ) async throws
+    /// Creates a new vehicle under a specific session
+    func create(vehicle: Vehicle, sessionId: UUID) async throws
 
-    func fetchVehicles(
-        sessionId: UUID
-    ) async throws -> [Vehicle]
+    /// Fetches all vehicles belonging to a session
+    func fetchVehicles(sessionId: UUID) async throws -> [Vehicle]
 
-    func update(
-        vehicle: Vehicle
-    ) async throws
+    /// Updates an existing vehicle
+    func update(vehicle: Vehicle) async throws
 
-    func delete(
-        vehicleId: UUID
-    ) async throws
+    /// Deletes a vehicle by identifier
+    func delete(vehicleId: UUID) async throws
 }

@@ -2,13 +2,18 @@ import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
-    // MARK: - Properties
+    // MARK: - UI
 
+    /// Main application window used to render UI hierarchy.
     var window: UIWindow?
 
-    private var appCoordinator: AppCoordinator!
+    // MARK: - Core Components
 
-    private var container: AppContainer!
+    /// Root coordinator responsible for navigation flow.
+    private var appCoordinator: AppCoordinator?
+
+    /// Shared dependency container from AppDelegate.
+    private var container: AppContainer?
 
     // MARK: - Scene Lifecycle
 
@@ -19,113 +24,70 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
 
         guard let windowScene = scene as? UIWindowScene else {
-            fatalError(
-                "Failed to cast UIScene to UIWindowScene"
-            )
+            fatalError("Scene is not UIWindowScene")
         }
 
-        guard
-            let appDelegate =
-                UIApplication.shared.delegate as? AppDelegate
-        else {
-            fatalError(
-                "Failed to retrieve AppDelegate"
-            )
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("AppDelegate not accessible")
         }
 
-        // MARK: - Dependencies
-
+        // MARK: - Dependency Resolution
+        // Assumption: AppContainer is created once in AppDelegate and shared globally
         container = appDelegate.appContainer
 
-        // MARK: - Window
-
-        let window = UIWindow(
-            windowScene: windowScene
-        )
-
+        // MARK: - Window Setup
+        let window = UIWindow(windowScene: windowScene)
         self.window = window
 
-        // MARK: - Coordinator
-
+        // MARK: - Coordinator Bootstrap
+        // Responsibility: AppCoordinator owns entire navigation flow
         appCoordinator = AppCoordinator(
-            container: container,
-            toast: ToastPresenter(
-                window: window
-            ),
-            loader: LoaderPresenter(
-                window: window
-            ),
+            container: container!,
+            toast: ToastPresenter(window: window),
+            loader: LoaderPresenter(window: window),
             window: window
         )
 
-        appCoordinator.start()
+        appCoordinator?.start()
     }
 
-    func sceneDidBecomeActive(
-        _ scene: UIScene
-    ) {
-
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        persistCoreData()
     }
 
-    func sceneWillResignActive(
-        _ scene: UIScene
-    ) {
-
-    }
-
-    func sceneWillEnterForeground(
-        _ scene: UIScene
-    ) {
-
-    }
-
-    func sceneDidEnterBackground(
-        _ scene: UIScene
-    ) {
-
-        saveContext()
-    }
-
-    func sceneDidDisconnect(
-        _ scene: UIScene
-    ) {
-
-        saveContext()
+    func sceneDidDisconnect(_ scene: UIScene) {
+        persistCoreData()
     }
 }
 
-extension SceneDelegate {
+// MARK: - Persistence Layer
 
-    private func saveContext() {
+private extension SceneDelegate {
+
+    /// Persists Core Data context when app transitions to background or disconnects.
+    ///
+    /// Assumptions:
+    /// - CoreDataStack is thread-safe for direct save calls.
+    /// - Save failure should not crash app; only logged in DEBUG builds.
+    func persistCoreData() {
+
+        guard let container else { return }
 
         do {
-
-            try container
-                .coreDataStack
-                .saveContext()
+            try container.coreDataStack.saveContext()
 
             #if DEBUG
-                print(
-                    """
-                    Core Data save successful
-                    """
-                )
+            print("✅ Core Data saved successfully")
             #endif
 
         } catch {
 
             #if DEBUG
-                print(
-                    """
-                    Failed to save Core Data
-
-                    Error:
-                    \(error)
-
-                    Description:
-                    \(error.localizedDescription)
-                    """
-                )
+            print("""
+            ❌ Core Data save failed
+            Error: \(error)
+            Description: \(error.localizedDescription)
+            """)
             #endif
         }
     }

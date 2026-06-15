@@ -1,11 +1,11 @@
-import Foundation
 import CoreLocation
+import Foundation
 
 final class SplashViewModel {
 
     private let sessionRepository: SessionRepository
     private let sessionBootstrapService: SessionBootstrapService
-    
+
     let locationProvider: LocationProviding
 
     init(

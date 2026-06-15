@@ -3,7 +3,7 @@ import UIKit
 public class Toast {
 
     private static var activeToasts = [Toast]()
-    
+
     private let window: UIWindow
 
     public let view: ToastView
@@ -48,7 +48,7 @@ public class Toast {
         view: ToastView,
         config: ToastConfiguration
     ) {
-        
+
         self.window = window
         self.toastStyle = toastStyle
         self.config = config
@@ -56,28 +56,28 @@ public class Toast {
 
         for dismissable in config.dismissables {
             switch dismissable {
-            case .tap:       enableTapToClose()
+            case .tap: enableTapToClose()
             case .longPress: enableLongPressToClose()
-            case .swipe:     enablePanToClose()
-            default:         break
+            case .swipe: enablePanToClose()
+            default: break
             }
         }
     }
-    
+
     public func show(after delay: TimeInterval = 0) {
-        
+
         UINotificationFeedbackGenerator()
             .notificationOccurred(
                 toastStyle.feedbackType
             )
-        
+
         window.addSubview(view)
         view.layer.zPosition = 999
-        
+
         view.createView(for: self)
 
         config.enteringAnimation.apply(to: view)
-        
+
         UIView.animate(
             withDuration: config.animationTime,
             delay: delay,
@@ -85,15 +85,14 @@ public class Toast {
         ) { [weak self] in
             guard let self else { return }
             config.enteringAnimation.undo(from: view)
-        }
-        completion: { [self] _ in
+        } completion: { [self] _ in
 
             configureCloseTimer()
-            
+
             if !config.allowToastOverlap {
                 closeOverlappedToasts()
             }
-            
+
             Toast.activeToasts.append(self)
         }
     }
@@ -116,14 +115,14 @@ public class Toast {
             animations: { [weak self] in
                 guard let self else { return }
                 guard animated else { return }
-                
+
                 config.exitingAnimation.apply(to: view)
             },
             completion: { [weak self] _ in
                 guard let self else { return }
-                
+
                 view.removeFromSuperview()
-                
+
                 if let index = Toast.activeToasts.firstIndex(where: {
                     $0 == self
                 }) {
@@ -145,7 +144,7 @@ extension Toast {
             target: self,
             action: #selector(toastOnPan(_:))
         )
-        
+
         view.addGestureRecognizer(pan)
     }
 
@@ -203,7 +202,7 @@ extension Toast {
             target: self,
             action: #selector(toastOnTap)
         )
-        
+
         view.addGestureRecognizer(tap)
     }
 
@@ -212,7 +211,7 @@ extension Toast {
             target: self,
             action: #selector(toastOnTap)
         )
-        
+
         view.addGestureRecognizer(tap)
     }
 
@@ -229,7 +228,7 @@ extension Toast {
                     repeats: false
                 ) { [weak self] _ in
                     guard let self else { return }
-                    
+
                     Task { @MainActor [weak self] in
                         guard let self else { return }
                         close()

@@ -1,382 +1,189 @@
 import Combine
 import UIKit
 
+/// A custom glass-style search bar built on top of UISearchBar.
+///
+/// Responsibilities:
+/// - Encapsulates UISearchBar styling and behavior
+/// - Provides reactive event stream via Combine
+/// - Ensures consistent design across the application
+///
+/// Design decisions:
+/// - Uses Combine instead of delegate callbacks for external communication
+/// - Wraps UISearchBar to isolate UIKit styling complexity from feature modules
+///
+/// Assumptions:
+/// - Component is used inside MVVM or reactive architecture
+/// - Only text-based search interaction is required
 public final class DarkGlassSearchBar: UIView {
 
-    // MARK: - Public
+    // MARK: - Public API
 
-    public var actionPublisher:
-        AnyPublisher<
-            LiquidGlassSearchBarAction,
-            Never
-        >
-    {
-        actionSubject
-            .eraseToAnyPublisher()
+    public var actionPublisher: AnyPublisher<LiquidGlassSearchBarAction, Never> {
+        actionSubject.eraseToAnyPublisher()
     }
 
     public override var intrinsicContentSize: CGSize {
-
-        CGSize(
-            width: UIView.noIntrinsicMetric,
-            height: 56
-        )
+        CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
 
-    // MARK: - Private
+    // MARK: - State
 
-    private let actionSubject =
-        PassthroughSubject<
-            LiquidGlassSearchBarAction,
-            Never
-        >()
+    private let actionSubject = PassthroughSubject<LiquidGlassSearchBarAction, Never>()
 
     // MARK: - UI
 
-    private let glassEffectView:
-        UIVisualEffectView =
-        {
-            let effect =
-                UIGlassEffect(
-                    style: .clear
-                )
+    private let glassEffectView: UIVisualEffectView = {
+        let effect = UIGlassEffect(style: .clear)
+        effect.isInteractive = true
+        effect.tintColor = .black.withAlphaComponent(0.35)
 
-            effect.isInteractive =
-                true
+        let view = UIVisualEffectView(effect: effect)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
-            effect.tintColor =
-                .black
-                .withAlphaComponent(
-                    0.35
-                )
-
-            let view =
-                UIVisualEffectView(
-                    effect: effect
-                )
-
-            view.translatesAutoresizingMaskIntoConstraints =
-                false
-
-            return view
-        }()
-
-    private let searchBar =
-        UISearchBar()
+    private let searchBar = UISearchBar()
 
     // MARK: - Init
 
-    public override init(
-        frame: CGRect
-    ) {
-
-        super.init(
-            frame: frame
-        )
-
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
         setupView()
     }
 
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) is not supported")
     }
 
     // MARK: - Layout
 
     public override func layoutSubviews() {
-
         super.layoutSubviews()
 
-        glassEffectView.layer.cornerRadius =
-            bounds.height / 2
-
-        glassEffectView.layer.masksToBounds =
-            true
+        glassEffectView.layer.cornerRadius = bounds.height / 2
+        glassEffectView.layer.masksToBounds = true
     }
 }
 
-// MARK: - Setup
+private extension DarkGlassSearchBar {
 
-extension DarkGlassSearchBar {
+    func setupView() {
 
-    private func setupView() {
+        translatesAutoresizingMaskIntoConstraints = false
 
-        translatesAutoresizingMaskIntoConstraints =
-            false
+        // Allows flexible width inside stack views / layouts
+        setContentHuggingPriority(.defaultLow, for: .horizontal)
+        setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        setContentCompressionResistancePriority(
-            .defaultLow,
-            for: .horizontal
-        )
-
-        setContentHuggingPriority(
-            .defaultLow,
-            for: .horizontal
-        )
-
-        addSubview(
-            glassEffectView
-        )
+        addSubview(glassEffectView)
 
         NSLayoutConstraint.activate([
-
-            glassEffectView.topAnchor.constraint(
-                equalTo: topAnchor
-            ),
-
-            glassEffectView.leadingAnchor.constraint(
-                equalTo: leadingAnchor
-            ),
-
-            glassEffectView.trailingAnchor.constraint(
-                equalTo: trailingAnchor
-            ),
-
-            glassEffectView.bottomAnchor.constraint(
-                equalTo: bottomAnchor
-            ),
+            glassEffectView.topAnchor.constraint(equalTo: topAnchor),
+            glassEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            glassEffectView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            glassEffectView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-
-        glassEffectView.clipsToBounds =
-            true
 
         setupSearchBar()
     }
+}
 
-    private func setupSearchBar() {
+private extension DarkGlassSearchBar {
 
-        searchBar.translatesAutoresizingMaskIntoConstraints =
-            false
+    func setupSearchBar() {
 
-        searchBar.delegate =
-            self
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.delegate = self
 
-        searchBar.placeholder =
-            "Search vehicles"
+        searchBar.searchBarStyle = .minimal
+        searchBar.isTranslucent = true
+        searchBar.backgroundImage = UIImage()
+        searchBar.tintColor = .white
 
-        searchBar.searchBarStyle =
-            .minimal
+        searchBar.placeholder = Self.defaultPlaceholder
 
-        searchBar.backgroundImage =
-            UIImage()
-
-        searchBar.setBackgroundImage(
-            UIImage(),
-            for: .any,
-            barMetrics: .default
-        )
-
-        searchBar.backgroundColor =
-            .clear
-
-        searchBar.isTranslucent =
-            true
-
-        searchBar.tintColor =
-            .white
-
-        glassEffectView
-            .contentView
-            .addSubview(
-                searchBar
-            )
+        glassEffectView.contentView.addSubview(searchBar)
 
         NSLayoutConstraint.activate([
-
-            searchBar.topAnchor.constraint(
-                equalTo:
-                    glassEffectView
-                    .contentView
-                    .topAnchor
-            ),
-
-            searchBar.leadingAnchor.constraint(
-                equalTo:
-                    glassEffectView
-                    .contentView
-                    .leadingAnchor
-            ),
-
-            searchBar.trailingAnchor.constraint(
-                equalTo:
-                    glassEffectView
-                    .contentView
-                    .trailingAnchor
-            ),
-
-            searchBar.bottomAnchor.constraint(
-                equalTo:
-                    glassEffectView
-                    .contentView
-                    .bottomAnchor
-            ),
+            searchBar.topAnchor.constraint(equalTo: glassEffectView.contentView.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: glassEffectView.contentView.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: glassEffectView.contentView.trailingAnchor),
+            searchBar.bottomAnchor.constraint(equalTo: glassEffectView.contentView.bottomAnchor)
         ])
 
         configureSearchField()
     }
-}
+    
+    func configureSearchField() {
 
-// MARK: - Search Field Styling
+        let field = searchBar.searchTextField
 
-extension DarkGlassSearchBar {
+        field.backgroundColor = .clear
+        field.layer.backgroundColor = UIColor.clear.cgColor
+        field.borderStyle = .none
 
-    private func configureSearchField() {
+        field.textColor = .white
+        field.tintColor = .white
 
-        let field =
-            searchBar.searchTextField
+        field.font = .systemFont(ofSize: 17, weight: .semibold)
 
-        field.backgroundColor =
-            .clear
+        field.attributedPlaceholder = NSAttributedString(
+            string: Self.defaultPlaceholder,
+            attributes: [
+                .foregroundColor: UIColor.white.withAlphaComponent(0.5),
+                .font: UIFont.systemFont(ofSize: 17, weight: .medium)
+            ]
+        )
 
-        field.layer.backgroundColor =
-            UIColor.clear.cgColor
+        field.clearButtonMode = .whileEditing
 
-        field.borderStyle =
-            .none
-
-        field.textColor =
-            .white
-
-        field.tintColor =
-            .white
-
-        field.font =
-            .systemFont(
-                ofSize: 17,
-                weight: .semibold
-            )
-
-        field.attributedPlaceholder =
-            NSAttributedString(
-                string:
-                    "Search vehicles",
-                attributes: [
-
-                    .foregroundColor:
-                        UIColor.white
-                        .withAlphaComponent(
-                            0.5
-                        ),
-
-                    .font:
-                        UIFont.systemFont(
-                            ofSize: 17,
-                            weight: .medium
-                        ),
-                ]
-            )
-
-        field.clearButtonMode =
-            .whileEditing
-
-        field.leftView?.tintColor =
-            .white
-
-        field.rightView?.tintColor =
-            .white
+        field.leftView?.tintColor = .white
+        field.rightView?.tintColor = .white
     }
+
+    static let defaultPlaceholder = "Search vehicles"
 }
 
-// MARK: - UISearchBarDelegate
+extension DarkGlassSearchBar: UISearchBarDelegate {
 
-extension DarkGlassSearchBar:
-    UISearchBarDelegate
-{
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
-    public func searchBar(
-        _ searchBar: UISearchBar,
-        textDidChange searchText: String
-    ) {
+        actionSubject.send(.textChanged(searchText))
 
         if searchText.isEmpty {
-
-            actionSubject.send(
-                .clearTapped
-            )
+            actionSubject.send(.clearTapped)
         }
-
-        actionSubject.send(
-            .textChanged(
-                searchText
-            )
-        )
     }
 
-    public func searchBarSearchButtonClicked(
-        _ searchBar: UISearchBar
-    ) {
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
-        actionSubject.send(
-            .searchSubmitted(
-                searchBar.text ?? ""
-            )
-        )
-
+        actionSubject.send(.searchSubmitted(searchBar.text ?? ""))
         searchBar.resignFirstResponder()
     }
 }
 
-// MARK: - Public API
-
 extension DarkGlassSearchBar {
 
     public var text: String {
-
         searchBar.text ?? ""
     }
 
     public func clear() {
-
         searchBar.text = ""
-
-        actionSubject.send(
-            .clearTapped
-        )
-
-        actionSubject.send(
-            .textChanged("")
-        )
+        actionSubject.send(.clearTapped)
+        actionSubject.send(.textChanged(""))
     }
 
     public func focus() {
-
-        searchBar
-            .becomeFirstResponder()
+        searchBar.becomeFirstResponder()
     }
 
     public func resign() {
-
-        searchBar
-            .resignFirstResponder()
+        searchBar.resignFirstResponder()
     }
 
-    public func setPlaceholder(
-        _ text: String
-    ) {
-
-        searchBar.placeholder =
-            text
-
-        let field =
-            searchBar.searchTextField
-
-        field.attributedPlaceholder =
-            NSAttributedString(
-                string: text,
-                attributes: [
-
-                    .foregroundColor:
-                        UIColor.white
-                        .withAlphaComponent(
-                            0.5
-                        ),
-
-                    .font:
-                        UIFont.systemFont(
-                            ofSize: 17,
-                            weight: .medium
-                        ),
-                ]
-            )
+    public func setPlaceholder(_ text: String) {
+        searchBar.placeholder = text
     }
 }

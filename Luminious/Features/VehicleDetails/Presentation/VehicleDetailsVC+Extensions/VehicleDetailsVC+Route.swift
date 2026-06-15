@@ -3,106 +3,106 @@ import SDWebImage
 import UIKit
 
 extension VehicleDetailsVC {
-    
+
     internal func loadRoute() {
-        
+
         routeLoadTask =
-        Task { [weak self] in
-            
-            guard let self
-            else {
-                return
-            }
-            
-            do {
-                
-                let route =
-                try await viewModel
-                    .fetchRoute()
-                
-                guard !Task.isCancelled
+            Task { [weak self] in
+
+                guard let self
                 else {
                     return
                 }
-                
-                await MainActor.run { [weak self] in
-                    
-                    guard let self
+
+                do {
+
+                    let route =
+                        try await viewModel
+                        .fetchRoute()
+
+                    guard !Task.isCancelled
                     else {
                         return
                     }
-                    
-                    bind()
-                    
-                    updateTripStatus()
-                    
-                    drawRoute(
-                        route
-                    )
-                    
-                    addMarkers(
-                        route
-                    )
-                }
-                
-            } catch {
-                
-                guard !Task.isCancelled
-                else {
-                    return
-                }
-                
-                await MainActor.run { [weak self] in
-                    
-                    guard let self
+
+                    await MainActor.run { [weak self] in
+
+                        guard let self
+                        else {
+                            return
+                        }
+
+                        bind()
+
+                        updateTripStatus()
+
+                        drawRoute(
+                            route
+                        )
+
+                        addMarkers(
+                            route
+                        )
+                    }
+
+                } catch {
+
+                    guard !Task.isCancelled
                     else {
                         return
                     }
-                    
-                    toast.show(
-                        style:
+
+                    await MainActor.run { [weak self] in
+
+                        guard let self
+                        else {
+                            return
+                        }
+
+                        toast.show(
+                            style:
                                 .error,
-                        
-                        title:
-                            "Route Error",
-                        
-                        subtitle:
-                            error.localizedDescription
-                    )
+
+                            title:
+                                "Route Error",
+
+                            subtitle:
+                                error.localizedDescription
+                        )
+                    }
                 }
             }
-        }
     }
-    
+
     internal func drawRoute(
         _ coordinates:
-        [CLLocationCoordinate2D]
+            [CLLocationCoordinate2D]
     ) {
-        
+
         guard
             !coordinates.isEmpty
         else {
             return
         }
-        
+
         animatedCoordinates = []
-        
+
         let full =
-        MKPolyline(
-            coordinates:
-                coordinates,
-            count:
-                coordinates.count
-        )
-        
+            MKPolyline(
+                coordinates:
+                    coordinates,
+                count:
+                    coordinates.count
+            )
+
         fullRouteOverlay =
-        full
-        
+            full
+
         playbackMapView
             .addOverlay(
                 full
             )
-        
+
         playbackMapView
             .setVisibleMapRect(
                 full.boundingMapRect,

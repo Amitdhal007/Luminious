@@ -1,10 +1,10 @@
 import CoreData
 
 final class SessionRepositoryImpl:
-    SessionRepository {
+    SessionRepository
+{
 
-    private let contextProvider:
-        CoreDataContextProvider
+    private let contextProvider: CoreDataContextProvider
 
     init(
         contextProvider: CoreDataContextProvider
@@ -22,7 +22,7 @@ extension SessionRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
@@ -44,11 +44,11 @@ extension SessionRepositoryImpl {
 extension SessionRepositoryImpl {
 
     func fetchLatest()
-    async throws -> Session? {
+        async throws -> Session?
+    {
 
-        let request:
-            NSFetchRequest<SessionEntity> =
-                SessionEntity.fetchRequest()
+        let request: NSFetchRequest<SessionEntity> =
+            SessionEntity.fetchRequest()
 
         request.fetchLimit = 1
 
@@ -61,8 +61,9 @@ extension SessionRepositoryImpl {
             )
         ]
 
-        guard let entity =
-            try contextProvider
+        guard
+            let entity =
+                try contextProvider
                 .viewContext
                 .fetch(request)
                 .first
@@ -70,7 +71,8 @@ extension SessionRepositoryImpl {
             return nil
         }
 
-        return SessionMapper
+        return
+            SessionMapper
             .toDomain(
                 entity: entity
             )
@@ -85,13 +87,12 @@ extension SessionRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<SessionEntity> =
-                    SessionEntity.fetchRequest()
+            let request: NSFetchRequest<SessionEntity> =
+                SessionEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -101,8 +102,9 @@ extension SessionRepositoryImpl {
                     session.id as CVarArg
                 )
 
-            guard let entity =
-                try context.fetch(request)
+            guard
+                let entity =
+                    try context.fetch(request)
                     .first
             else {
                 throw RepositoryError
@@ -127,13 +129,12 @@ extension SessionRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<SessionEntity> =
-                    SessionEntity.fetchRequest()
+            let request: NSFetchRequest<SessionEntity> =
+                SessionEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -143,8 +144,9 @@ extension SessionRepositoryImpl {
                     sessionId as CVarArg
                 )
 
-            guard let entity =
-                try context.fetch(request)
+            guard
+                let entity =
+                    try context.fetch(request)
                     .first
             else {
                 throw RepositoryError

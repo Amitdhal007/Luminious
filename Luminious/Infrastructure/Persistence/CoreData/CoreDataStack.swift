@@ -1,10 +1,10 @@
 import CoreData
 
 final class CoreDataStack:
-    CoreDataContextProvider {
+    CoreDataContextProvider
+{
 
-    private let container:
-        NSPersistentContainer
+    private let container: NSPersistentContainer
 
     init() {
 
@@ -13,8 +13,9 @@ final class CoreDataStack:
                 name: "VehicleTracking"
             )
 
-        guard let description =
-            container
+        guard
+            let description =
+                container
                 .persistentStoreDescriptions
                 .first
         else {
@@ -54,14 +55,14 @@ final class CoreDataStack:
             .undoManager = nil
     }
 
-    var viewContext:
-        NSManagedObjectContext {
+    var viewContext: NSManagedObjectContext {
 
         container.viewContext
     }
 
     func newBackgroundContext()
-        -> NSManagedObjectContext {
+        -> NSManagedObjectContext
+    {
 
         let context =
             container.newBackgroundContext()
@@ -84,7 +85,7 @@ final class CoreDataStack:
 
         try context.save()
     }
-    
+
     func saveContext() throws {
 
         try save(

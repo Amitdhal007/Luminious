@@ -43,12 +43,12 @@ extension MapVC: MKMapViewDelegate {
             view?.annotation =
                 annotation
         }
-        
+
         if let vehicleAnnotation = annotation as? VehicleAnnotation {
             view?.image =
-            UIImage(named: vehicleAnnotation.vehicle.vehicleType.rawValue)
+                UIImage(named: vehicleAnnotation.vehicle.vehicleType.rawValue)
         }
-            
+
         return view
     }
 
@@ -64,7 +64,7 @@ extension MapVC: MKMapViewDelegate {
         else {
             return
         }
-        
+
         guard let session = viewModel.currentSession
         else {
             return
@@ -75,7 +75,7 @@ extension MapVC: MKMapViewDelegate {
                 session: session,
                 vehicle: annotation.vehicle
             )
-        
+
         mapView.deselectAnnotation(
             annotation,
             animated: false

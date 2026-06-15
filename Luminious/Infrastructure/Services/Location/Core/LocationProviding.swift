@@ -5,13 +5,11 @@ protocol LocationProviding {
 
     var currentLocation: CLLocation? { get }
 
-    var currentLocationPublisher:
-        AnyPublisher<CLLocation?, Never> {
+    var currentLocationPublisher: AnyPublisher<CLLocation?, Never> {
         get
     }
 
-    var authorizationStatus:
-        CLAuthorizationStatus {
+    var authorizationStatus: CLAuthorizationStatus {
         get
     }
 
@@ -19,7 +17,8 @@ protocol LocationProviding {
         AnyPublisher<
             CLAuthorizationStatus,
             Never
-        > {
+        >
+    {
         get
     }
 

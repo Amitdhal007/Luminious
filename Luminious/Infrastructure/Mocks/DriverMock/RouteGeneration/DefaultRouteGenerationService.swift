@@ -2,12 +2,12 @@ import CoreLocation
 import MapKit
 
 final class DefaultRouteGenerationService:
-    RouteGenerationService {
+    RouteGenerationService
+{
 
     // MARK: - Dependencies
 
-    private let geocodingService:
-        GeocodingServiceing
+    private let geocodingService: GeocodingServiceing
 
     // MARK: - Init
 
@@ -60,8 +60,9 @@ final class DefaultRouteGenerationService:
                 request: request
             ).calculate()
 
-        guard let mkRoute =
-            response.routes.first
+        guard
+            let mkRoute =
+                response.routes.first
         else {
             throw RouteGenerationError
                 .routeNotFound
@@ -112,10 +113,10 @@ final class DefaultRouteGenerationService:
                 destinationAddress,
 
             status:
-                    .running,
+                .running,
 
             startedAt:
-                    .now,
+                .now,
 
             completedAt:
                 nil,
@@ -126,9 +127,9 @@ final class DefaultRouteGenerationService:
     }
 }
 
-private extension DefaultRouteGenerationService {
+extension DefaultRouteGenerationService {
 
-    func makeRouteName(
+    fileprivate func makeRouteName(
         startAddress: String?,
         destinationAddress: String?
     ) -> String {
@@ -138,23 +139,27 @@ private extension DefaultRouteGenerationService {
             destinationAddress
         ) {
 
-        case let (
-            start?,
-            destination?
+        case (
+            let
+                start?,
+            let
+                destination?
         ):
 
             return "\(start) → \(destination)"
 
-        case let (
-            start?,
+        case (
+            let
+                start?,
             nil
         ):
 
             return "\(start) → Destination"
 
-        case let (
+        case (
             nil,
-            destination?
+            let
+                destination?
         ):
 
             return "Origin → \(destination)"

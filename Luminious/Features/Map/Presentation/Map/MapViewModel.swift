@@ -9,7 +9,7 @@ final class MapViewModel {
     private(set) var vehicles: [Vehicle] = []
 
     @Published private(set) var currentSession: Session?
-    
+
     internal var annotationMap: [UUID: VehicleAnnotation] = [:]
 
     // MARK: - Dependencies
@@ -47,11 +47,11 @@ final class MapViewModel {
         self.simulationService = vehicleSimulationService
         self.sessionBootstrapService = sessionBootstrapService
     }
-    
+
     public func setVehicles(_ vehicles: [Vehicle]) {
         self.vehicles = vehicles
     }
-    
+
     public func updateCurrentSession(_ session: Session?) {
         self.currentSession = session
     }

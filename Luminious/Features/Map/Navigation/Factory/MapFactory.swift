@@ -1,17 +1,23 @@
-import Foundation
+import UIKit
 
+/// Factory responsible for creating all Map module screens.
+///
+/// Ensures:
+/// - Dependency injection consistency
+/// - Centralized screen configuration
+/// - Coordinator-driven navigation setup
 protocol MapFactory {
 
     func makeMapScreen(
         coordinator: MapCoordinating
-    ) -> MapVC
+    ) -> UIViewController
 
     func makeSearchVehicleScreen(
-        vehicles: [Vehicle]
-    ) -> SearchVehicleVC
+        vehicles: [Vehicle],
+    ) -> UIViewController
 
     func makeVehicleDetailsScreen(
         session: Session,
         vehicle: Vehicle
-    ) -> VehicleDetailsVC
+    ) -> UIViewController
 }

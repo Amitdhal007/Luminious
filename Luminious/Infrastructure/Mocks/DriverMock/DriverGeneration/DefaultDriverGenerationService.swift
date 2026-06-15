@@ -15,8 +15,14 @@ final class DefaultDriverGenerationService:
                 Vehicle(
                     id: UUID(),
 
-                    driverName: driver.name,
-                    driverAvatarURL: .init(string: driver.avatarURL),
+                    driverName:
+                        driver.name,
+
+                    driverAvatarURL:
+                        .init(
+                            string:
+                                driver.avatarURL
+                        ),
 
                     vehicleNumber:
                         Self.randomVehicleNumber(),
@@ -49,7 +55,6 @@ extension DefaultDriverGenerationService {
     private static func randomVehicleNumber() -> String {
 
         let states = [
-
             "DL",
             "MH",
             "KA",
@@ -85,6 +90,7 @@ extension DefaultDriverGenerationService {
                 in: 1000...9999
             )
 
-        return "\(state)\(district)\(series)\(number)"
+        return
+            "\(state)\(district)\(series)\(number)"
     }
 }

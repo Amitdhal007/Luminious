@@ -1,19 +1,26 @@
 import Foundation
 
+/// Repository responsible for managing Session persistence.
+///
+/// Design intent:
+/// - Abstracts data source (CoreData / API / cache)
+/// - Provides CRUD operations for Session entity
+/// - Keeps business logic out of persistence layer
+///
+/// Assumptions:
+/// - Session is uniquely identified internally (e.g., id inside Session model)
+/// - "Latest session" is defined by persistence ordering (e.g., timestamp)
 protocol SessionRepository {
 
-    func create(
-        session: Session
-    ) async throws
+    /// Creates a new session in persistence layer
+    func create(session: Session) async throws
 
-    func fetchLatest()
-    async throws -> Session?
+    /// Fetches the most recently created/updated session
+    func fetchLatest() async throws -> Session?
 
-    func update(
-        session: Session
-    ) async throws
+    /// Updates an existing session
+    func update(session: Session) async throws
 
-    func delete(
-        sessionId: UUID
-    ) async throws
+    /// Deletes a session by its identifier
+    func delete(sessionId: UUID) async throws
 }

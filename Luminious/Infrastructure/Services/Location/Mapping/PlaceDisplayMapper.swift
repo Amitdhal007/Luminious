@@ -28,17 +28,20 @@ extension PlaceDisplayMapper {
         let address = mapItem.addressRepresentations
 
         if let name = mapItem.name,
-           !name.isEmpty {
+            !name.isEmpty
+        {
             return name
         }
 
         if let shortAddress = address?.cityWithContext(.short),
-           !shortAddress.isEmpty {
+            !shortAddress.isEmpty
+        {
             return shortAddress
         }
 
         if let city = address?.cityName,
-           !city.isEmpty {
+            !city.isEmpty
+        {
             return city
         }
 
@@ -53,7 +56,7 @@ extension PlaceDisplayMapper {
 
         let parts = [
             address?.regionName,
-            address?.region?.identifier
+            address?.region?.identifier,
         ]
         .compactMap { $0 }
         .filter { !$0.isEmpty }

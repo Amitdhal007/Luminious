@@ -58,7 +58,7 @@ extension MapVC {
 
                 continue
             }
-            
+
             annotation.vehicle = vehicle
 
             let newCoordinate =
@@ -83,7 +83,7 @@ extension MapVC {
                     .allowUserInteraction,
                 ]
             ) { [weak self] in
-                
+
                 guard let self
                 else {
                     return

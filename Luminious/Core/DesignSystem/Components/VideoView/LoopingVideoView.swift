@@ -1,11 +1,25 @@
 import AVFoundation
 import UIKit
 
+/// A reusable UIView responsible for playing an intro video using AVPlayer.
+///
+/// Responsibilities:
+/// - Encapsulates AVPlayer setup and lifecycle
+/// - Supports auto-looping playback
+/// - Provides simple API to play/stop videos
+///
+/// Assumptions:
+/// - Video files are bundled inside app resources
+/// - Only one video plays at a time per instance
+/// - Looping behavior is required for intro screens
 final class IntroVideoView: UIView {
+
+    // MARK: - Core Playback
 
     private let player = AVPlayer()
     private let playerLayer = AVPlayerLayer()
 
+    /// Observer used for looping playback when video ends.
     private var loopObserver: NSObjectProtocol?
 
     // MARK: - Init
@@ -21,14 +35,20 @@ final class IntroVideoView: UIView {
     }
 
     deinit {
-        if let loopObserver = loopObserver {
-            NotificationCenter.default.removeObserver(loopObserver)
+        if let observer = loopObserver {
+            NotificationCenter.default.removeObserver(observer)
         }
+
+        player.pause()
+        player.replaceCurrentItem(with: nil)
+        playerLayer.player = nil
     }
 
-    // MARK: - Setup (closed)
+    // MARK: - Setup
 
+    /// Configures AVPlayer, layer, and looping behavior.
     private func setupPlayer() {
+
         playerLayer.player = player
         playerLayer.videoGravity = .resizeAspectFill
         layer.addSublayer(playerLayer)
@@ -38,21 +58,36 @@ final class IntroVideoView: UIView {
             object: nil,
             queue: .main
         ) { [weak self] notification in
+
             guard let self,
-                let item = notification.object as? AVPlayerItem,
-                item == self.player.currentItem
-            else { return }
+                  let item = notification.object as? AVPlayerItem,
+                  item == self.player.currentItem else {
+                return
+            }
 
             self.player.seek(to: .zero)
             self.player.play()
         }
     }
 
+    // MARK: - Layout
+
     override func layoutSubviews() {
         super.layoutSubviews()
         playerLayer.frame = bounds
     }
 
+    // MARK: - Playback API
+
+    /// Plays an intro video from app bundle.
+    ///
+    /// - Parameters:
+    ///   - fileName: Name of the video file (without extension)
+    ///   - fileType: File extension (default: mp4)
+    ///   - bundle: Source bundle (default: main bundle)
+    ///   - muted: Whether audio should be muted
+    ///   - rate: Playback speed
+    ///   - autoPlay: Automatically start playback after loading
     func playIntro(
         named fileName: String,
         fileType: String = "mp4",
@@ -62,10 +97,8 @@ final class IntroVideoView: UIView {
         autoPlay: Bool = true
     ) {
 
-        guard
-            let url = bundle.url(forResource: fileName, withExtension: fileType)
-        else {
-            print("Intro video not found: \(fileName).\(fileType)")
+        guard let url = bundle.url(forResource: fileName, withExtension: fileType) else {
+            assertionFailure("Intro video not found: \(fileName).\(fileType)")
             return
         }
 
@@ -80,6 +113,9 @@ final class IntroVideoView: UIView {
         }
     }
 
+    // MARK: - Control
+
+    /// Stops playback and clears current item.
     func stop() {
         player.pause()
         player.replaceCurrentItem(with: nil)

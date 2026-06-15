@@ -1,10 +1,10 @@
 import CoreData
 
 final class VehicleRepositoryImpl:
-    VehicleRepository {
+    VehicleRepository
+{
 
-    private let contextProvider:
-        CoreDataContextProvider
+    private let contextProvider: CoreDataContextProvider
 
     init(
         contextProvider: CoreDataContextProvider
@@ -23,13 +23,12 @@ extension VehicleRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<SessionEntity> =
-                    SessionEntity.fetchRequest()
+            let request: NSFetchRequest<SessionEntity> =
+                SessionEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -39,8 +38,9 @@ extension VehicleRepositoryImpl {
                     sessionId as CVarArg
                 )
 
-            guard let session =
-                try context.fetch(request)
+            guard
+                let session =
+                    try context.fetch(request)
                     .first
             else {
                 throw RepositoryError
@@ -71,9 +71,8 @@ extension VehicleRepositoryImpl {
         sessionId: UUID
     ) async throws -> [Vehicle] {
 
-        let request:
-            NSFetchRequest<VehicleEntity> =
-                VehicleEntity.fetchRequest()
+        let request: NSFetchRequest<VehicleEntity> =
+            VehicleEntity.fetchRequest()
 
         request.predicate =
             NSPredicate(
@@ -83,8 +82,8 @@ extension VehicleRepositoryImpl {
 
         let entities =
             try contextProvider
-                .viewContext
-                .fetch(request)
+            .viewContext
+            .fetch(request)
 
         return entities.map {
             VehicleMapper.toDomain(
@@ -102,13 +101,12 @@ extension VehicleRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<VehicleEntity> =
-                    VehicleEntity.fetchRequest()
+            let request: NSFetchRequest<VehicleEntity> =
+                VehicleEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -118,8 +116,9 @@ extension VehicleRepositoryImpl {
                     vehicle.id as CVarArg
                 )
 
-            guard let entity =
-                try context.fetch(request)
+            guard
+                let entity =
+                    try context.fetch(request)
                     .first
             else {
                 throw RepositoryError
@@ -144,13 +143,12 @@ extension VehicleRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<VehicleEntity> =
-                    VehicleEntity.fetchRequest()
+            let request: NSFetchRequest<VehicleEntity> =
+                VehicleEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -160,8 +158,9 @@ extension VehicleRepositoryImpl {
                     vehicleId as CVarArg
                 )
 
-            guard let entity =
-                try context.fetch(request)
+            guard
+                let entity =
+                    try context.fetch(request)
                     .first
             else {
                 throw RepositoryError

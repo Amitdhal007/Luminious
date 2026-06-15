@@ -1,20 +1,20 @@
-import UIKit
 import Combine
 import MapKit
+import UIKit
 
 extension MapVC {
-    
+
     public func configureBindings() {
-        
+
         bindVehicles()
         bindEvents()
     }
 }
 
-private extension MapVC {
-    
+extension MapVC {
+
     private func bindVehicles() {
-        
+
         viewModel
             .vehiclesPublisher
             .drop(while: { $0.isEmpty })
@@ -22,14 +22,14 @@ private extension MapVC {
                 on: DispatchQueue.main
             )
             .sink { [weak self] vehicles in
-                
+
                 guard let self
                 else {
                     return
                 }
-                
+
                 viewModel.setVehicles(vehicles)
-                
+
                 animateVehicleUpdates(
                     vehicles
                 )
@@ -38,9 +38,9 @@ private extension MapVC {
                 in: &cancellables
             )
     }
-    
+
     private func bindEvents() {
-        
+
         viewModel
             .eventBus
             .events
@@ -48,7 +48,7 @@ private extension MapVC {
                 on: DispatchQueue.main
             )
             .sink { [weak self] event in
-                
+
                 self?
                     .handleEvent(
                         event
@@ -58,7 +58,7 @@ private extension MapVC {
                 in: &cancellables
             )
     }
-    
+
     private func handleEvent(
         _ event: AppEvent
     ) {
@@ -68,7 +68,8 @@ private extension MapVC {
             return
         }
 
-        guard let annotation =
+        guard
+            let annotation =
                 viewModel.annotationMap[vehicle.id]
         else {
             return

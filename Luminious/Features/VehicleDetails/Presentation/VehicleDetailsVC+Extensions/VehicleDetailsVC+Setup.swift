@@ -3,129 +3,129 @@ import SDWebImage
 import UIKit
 
 extension VehicleDetailsVC {
-    
+
     internal func initialSetup() {
-        
+
         setupGlassContainer()
-        
+
         setupMapView()
-        
+
         configure()
-        
+
         bind()
-        
+
         loadRoute()
     }
-    
+
     internal func cleanup() {
-        
+
         playbackAnimationTask?
             .cancel()
-        
+
         routeLoadTask?
             .cancel()
-        
+
         viewModel
             .stopPlayback()
-        
+
         viewModel
             .onPlaybackMove = nil
     }
-    
+
     internal func setupMapView() {
-        
+
         playbackMapView.delegate =
-        self
-        
+            self
+
         // MARK: - User
-        
+
         playbackMapView.showsUserLocation =
-        false
-        
+            false
+
         playbackMapView.userTrackingMode =
             .none
-        
+
         // MARK: - UI Cleanup
-        
+
         playbackMapView.pointOfInterestFilter =
             .excludingAll
-        
+
         playbackMapView.showsCompass =
-        false
-        
+            false
+
         playbackMapView.showsScale =
-        false
-        
+            false
+
         playbackMapView.showsTraffic =
-        false
-        
+            false
+
         playbackMapView.showsBuildings =
-        true
-        
+            true
+
         playbackMapView.showsLargeContentViewer =
-        false
-        
+            false
+
         // MARK: - Interaction
-        
+
         playbackMapView.isRotateEnabled =
-        false
-        
+            false
+
         playbackMapView.isPitchEnabled =
-        true
-        
+            true
+
         playbackMapView.isZoomEnabled =
-        true
-        
+            true
+
         playbackMapView.isScrollEnabled =
-        true
-        
+            true
+
         // MARK: - Appearance
-        
+
         playbackMapView.overrideUserInterfaceStyle =
             .dark
-        
+
         let configuration =
-        MKStandardMapConfiguration(
-            elevationStyle:
+            MKStandardMapConfiguration(
+                elevationStyle:
                     .realistic
-        )
-        
+            )
+
         configuration.pointOfInterestFilter =
             .excludingAll
-        
+
         configuration.emphasisStyle =
             .muted
-        
+
         playbackMapView.preferredConfiguration =
-        configuration
-        
+            configuration
+
         // MARK: - Camera
-        
+
         playbackMapView.camera =
-        MKMapCamera(
-            lookingAtCenter:
-                CLLocationCoordinate2D(
-                    latitude: 0,
-                    longitude: 0
-                ),
-            
-            fromDistance:
-                1800,
-            
-            pitch:
-                60,
-            
-            heading:
-                0
-        )
-        
+            MKMapCamera(
+                lookingAtCenter:
+                    CLLocationCoordinate2D(
+                        latitude: 0,
+                        longitude: 0
+                    ),
+
+                fromDistance:
+                    1800,
+
+                pitch:
+                    60,
+
+                heading:
+                    0
+            )
+
         playbackMapView.cameraZoomRange =
-        MKMapView
+            MKMapView
             .CameraZoomRange(
-                
+
                 minCenterCoordinateDistance:
                     400,
-                
+
                 maxCenterCoordinateDistance:
                     8000
             )

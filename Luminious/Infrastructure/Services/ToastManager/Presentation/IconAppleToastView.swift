@@ -47,7 +47,7 @@ public final class IconAppleToastView: UIStackView {
 
             imageView.heightAnchor.constraint(
                 equalToConstant: 24
-            )
+            ),
         ])
 
         return imageView
@@ -154,7 +154,7 @@ extension IconAppleToastView {
 
             imageView.centerYAnchor.constraint(
                 equalTo: symbolContainerView.centerYAnchor
-            )
+            ),
         ])
     }
 }

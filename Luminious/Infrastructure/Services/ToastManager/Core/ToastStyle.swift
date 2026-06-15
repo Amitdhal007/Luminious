@@ -8,8 +8,6 @@ public enum ToastStyle {
     case info
 }
 
-
-
 // MARK: - Icons
 
 extension ToastStyle {
@@ -33,8 +31,6 @@ extension ToastStyle {
     }
 
 }
-
-
 
 // MARK: - Colors
 
@@ -78,8 +74,6 @@ extension ToastStyle {
         }
     }
 
-
-
     /// Glass background
     var backgroundColor: UIColor {
 
@@ -89,15 +83,11 @@ extension ToastStyle {
         )
     }
 
-
-
     /// Blur style
     var blurStyle: UIBlurEffect.Style {
 
         .systemUltraThinMaterialDark
     }
-
-
 
     /// Border
 
@@ -109,8 +99,6 @@ extension ToastStyle {
             )
     }
 
-
-
     /// Glow
 
     var shadowColor: UIColor {
@@ -121,8 +109,6 @@ extension ToastStyle {
             )
     }
 
-
-
     /// Text
 
     var textColor: UIColor {
@@ -132,15 +118,14 @@ extension ToastStyle {
 
 }
 
-
-
 // MARK: - Haptic
 
 extension ToastStyle {
 
     var feedbackType:
         UINotificationFeedbackGenerator
-        .FeedbackType {
+            .FeedbackType
+    {
 
         switch self {
 

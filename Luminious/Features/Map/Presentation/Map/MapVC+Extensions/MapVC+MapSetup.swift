@@ -102,17 +102,18 @@ extension MapVC {
 
     public func centerOnUserLocation() {
 
-       guard let coordinate =
-            viewModel
-        .locationManager
-        .currentLocation?
-        .coordinate
+        guard
+            let coordinate =
+                viewModel
+                .locationManager
+                .currentLocation?
+                .coordinate
         else {
-           
-           showLocationPermissionAlert()
-           
-           return
-       }
+
+            showLocationPermissionAlert()
+
+            return
+        }
 
         let region =
             MKCoordinateRegion(

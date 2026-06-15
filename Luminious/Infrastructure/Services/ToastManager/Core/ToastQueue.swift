@@ -45,7 +45,6 @@ public class ToastQueue {
         }
 
         let toast: Toast = queue.remove(at: index)
-        let delegate = QueuedToastDelegate(queue: self)
 
         toast.show(after: after)
     }

@@ -1,10 +1,10 @@
 import CoreData
 
 final class RouteRepositoryImpl:
-    RouteRepository {
+    RouteRepository
+{
 
-    private let contextProvider:
-        CoreDataContextProvider
+    private let contextProvider: CoreDataContextProvider
 
     init(
         contextProvider: CoreDataContextProvider
@@ -18,18 +18,17 @@ extension RouteRepositoryImpl {
 
     func create(
         route: Route,
-        vehicleId: UUID
+        for vehicleId: UUID
     ) async throws {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<VehicleEntity> =
-                    VehicleEntity.fetchRequest()
+            let request: NSFetchRequest<VehicleEntity> =
+                VehicleEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -39,8 +38,9 @@ extension RouteRepositoryImpl {
                     vehicleId as CVarArg
                 )
 
-            guard let vehicle =
-                try context.fetch(request)
+            guard
+                let vehicle =
+                    try context.fetch(request)
                     .first
             else {
                 throw RepositoryError
@@ -85,12 +85,11 @@ extension RouteRepositoryImpl {
 extension RouteRepositoryImpl {
 
     func fetchRoute(
-        vehicleId: UUID
+        for vehicleId: UUID
     ) async throws -> Route? {
 
-        let request:
-            NSFetchRequest<RouteEntity> =
-                RouteEntity.fetchRequest()
+        let request: NSFetchRequest<RouteEntity> =
+            RouteEntity.fetchRequest()
 
         request.fetchLimit = 1
 
@@ -100,8 +99,9 @@ extension RouteRepositoryImpl {
                 vehicleId as CVarArg
             )
 
-        guard let entity =
-            try contextProvider
+        guard
+            let entity =
+                try contextProvider
                 .viewContext
                 .fetch(request)
                 .first
@@ -123,13 +123,12 @@ extension RouteRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<RouteEntity> =
-                    RouteEntity.fetchRequest()
+            let request: NSFetchRequest<RouteEntity> =
+                RouteEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -139,8 +138,9 @@ extension RouteRepositoryImpl {
                     route.id as CVarArg
                 )
 
-            guard let entity =
-                try context.fetch(request)
+            guard
+                let entity =
+                    try context.fetch(request)
                     .first
             else {
                 return
@@ -190,13 +190,12 @@ extension RouteRepositoryImpl {
 
         let context =
             contextProvider
-                .newBackgroundContext()
+            .newBackgroundContext()
 
         try await context.performAsync {
 
-            let request:
-                NSFetchRequest<RouteEntity> =
-                    RouteEntity.fetchRequest()
+            let request: NSFetchRequest<RouteEntity> =
+                RouteEntity.fetchRequest()
 
             request.fetchLimit = 1
 
@@ -206,8 +205,9 @@ extension RouteRepositoryImpl {
                     routeId as CVarArg
                 )
 
-            guard let entity =
-                try context.fetch(request)
+            guard
+                let entity =
+                    try context.fetch(request)
                     .first
             else {
                 return

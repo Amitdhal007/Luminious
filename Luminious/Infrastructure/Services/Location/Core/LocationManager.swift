@@ -6,64 +6,64 @@ final class LocationManager:
     NSObject,
     LocationProviding
 {
-    
+
     // MARK: Published
-    
+
     @Published
     private var location: CLLocation?
-    
+
     @Published
     private var authStatus: CLAuthorizationStatus
-    
+
     // MARK: Public
-    
+
     var currentLocation: CLLocation? {
         location
     }
-    
+
     var currentLocationPublisher: AnyPublisher<CLLocation?, Never> {
-        
+
         $location
             .eraseToAnyPublisher()
     }
-    
+
     var authorizationStatus: CLAuthorizationStatus {
-        
+
         authStatus
     }
-    
+
     var authorizationStatusPublisher:
-    AnyPublisher<
-        CLAuthorizationStatus,
-        Never
-    >
+        AnyPublisher<
+            CLAuthorizationStatus,
+            Never
+        >
     {
-        
+
         $authStatus
             .eraseToAnyPublisher()
     }
-    
+
     // MARK: Private
-    
+
     private let locationManager =
-    CLLocationManager()
-    
+        CLLocationManager()
+
     private var continuations:
-    [CheckedContinuation<
-     CLLocation,
-     Error
-     >] = []
-    
+        [CheckedContinuation<
+            CLLocation,
+            Error
+        >] = []
+
     // MARK: Init
-    
+
     override init() {
-        
+
         authStatus =
-        locationManager
+            locationManager
             .authorizationStatus
-        
+
         super.init()
-        
+
         configure()
     }
 }
@@ -71,47 +71,47 @@ final class LocationManager:
 // MARK: Setup
 
 extension LocationManager {
-    
+
     private func configure() {
-        
+
         locationManager.delegate =
-        self
-        
+            self
+
         locationManager.desiredAccuracy =
-        kCLLocationAccuracyBestForNavigation
-        
+            kCLLocationAccuracyBestForNavigation
+
         locationManager.distanceFilter =
-        5
-        
+            5
+
         locationManager
             .pausesLocationUpdatesAutomatically =
-        false
+            false
     }
 }
 
 // MARK: Authorization
 
 extension LocationManager {
-    
+
     func requestWhenInUseAuthorization() {
-        
+
         locationManager
             .requestWhenInUseAuthorization()
     }
-    
+
     func isLocationEnabled()
-    -> Bool
+        -> Bool
     {
-        
+
         switch authStatus {
-            
+
         case .authorizedAlways,
-                .authorizedWhenInUse:
-            
+            .authorizedWhenInUse:
+
             return true
-            
+
         default:
-            
+
             return false
         }
     }
@@ -120,102 +120,102 @@ extension LocationManager {
 // MARK: Actions
 
 extension LocationManager {
-    
+
     func requestLocation() {
-        
+
         guard isLocationEnabled()
         else {
-            
+
             requestWhenInUseAuthorization()
-            
+
             return
         }
-        
+
         locationManager
             .requestLocation()
     }
-    
+
     func startUpdatingLocation() {
-        
+
         guard isLocationEnabled()
         else {
-            
+
             requestWhenInUseAuthorization()
-            
+
             return
         }
-        
+
         locationManager
             .startUpdatingLocation()
     }
-    
+
     func stopUpdatingLocation() {
-        
+
         locationManager
             .stopUpdatingLocation()
     }
-    
+
     func getCurrentLocation()
-    async throws
-    -> CLLocation
+        async throws
+        -> CLLocation
     {
-        
+
         if let location {
             return location
         }
-        
+
         return try await withCheckedThrowingContinuation {
             continuation in
-            
+
             continuations
                 .append(
                     continuation
                 )
-            
+
             switch authStatus {
-                
+
             case .authorizedAlways,
-                    .authorizedWhenInUse:
-                
+                .authorizedWhenInUse:
+
                 locationManager
                     .requestLocation()
-                
+
             case .notDetermined:
-                
+
                 locationManager
                     .requestWhenInUseAuthorization()
-                
+
             case .denied,
-                    .restricted:
-                
+                .restricted:
+
                 continuation
                     .resume(
                         throwing:
                             LocationError
                             .permissionDenied
                     )
-                
+
                 continuations
                     .removeAll {
                         $0 as AnyObject
-                        === continuation
-                        as AnyObject
+                            === continuation
+                            as AnyObject
                     }
-                
+
             @unknown default:
-                
+
                 continuation
                     .resume(
                         throwing:
                             LocationError
                             .locationUnavailable
                     )
-                
+
                 continuations
                     .removeAll {
                         $0 as AnyObject
-                        === continuation
-                        as AnyObject
+                            === continuation
+                            as AnyObject
                     }
             }
         }
@@ -227,31 +227,31 @@ extension LocationManager {
 extension LocationManager:
     CLLocationManagerDelegate
 {
-    
+
     nonisolated func locationManager(
         _ manager: CLLocationManager,
         didUpdateLocations locations:
-        [CLLocation]
+            [CLLocation]
     ) {
-        
+
         guard
             let latest =
                 locations.last
         else {
             return
         }
-        
+
         Task { @MainActor in
-            
+
             self.location =
-            latest
-            
+                latest
+
             let continuations =
-            self.continuations
-            
+                self.continuations
+
             self.continuations
                 .removeAll()
-            
+
             continuations
                 .forEach {
                     $0.resume(
@@ -261,41 +261,41 @@ extension LocationManager:
                 }
         }
     }
-    
+
     nonisolated func locationManagerDidChangeAuthorization(
         _ manager: CLLocationManager
     ) {
-        
+
         let status =
-        manager.authorizationStatus
-        
+            manager.authorizationStatus
+
         Task { @MainActor in
-            
+
             self.authStatus =
-            status
-            
+                status
+
             switch status {
-                
+
             case .authorizedAlways,
-                    .authorizedWhenInUse:
-                
+                .authorizedWhenInUse:
+
                 if !self.continuations
                     .isEmpty
                 {
-                    
+
                     manager
                         .requestLocation()
                 }
-                
+
             case .denied,
-                    .restricted:
-                
+                .restricted:
+
                 let continuations =
-                self.continuations
-                
+                    self.continuations
+
                 self.continuations
                     .removeAll()
-                
+
                 continuations
                     .forEach {
                         $0.resume(
@@ -304,18 +304,18 @@ extension LocationManager:
                                 .permissionDenied
                         )
                     }
-                
+
             case .notDetermined:
                 break
-                
+
             @unknown default:
-                
+
                 let continuations =
-                self.continuations
-                
+                    self.continuations
+
                 self.continuations
                     .removeAll()
-                
+
                 continuations
                     .forEach {
                         $0.resume(
@@ -327,20 +327,20 @@ extension LocationManager:
             }
         }
     }
-    
+
     nonisolated func locationManager(
         _ manager: CLLocationManager,
         didFailWithError error: Error
     ) {
-        
+
         Task { @MainActor in
-            
+
             let continuations =
-            self.continuations
-            
+                self.continuations
+
             self.continuations
                 .removeAll()
-            
+
             continuations
                 .forEach {
                     $0.resume(
@@ -349,9 +349,9 @@ extension LocationManager:
                     )
                 }
         }
-        
-#if DEBUG
-        print("📍", error)
-#endif
+
+        #if DEBUG
+            print("📍", error)
+        #endif
     }
 }

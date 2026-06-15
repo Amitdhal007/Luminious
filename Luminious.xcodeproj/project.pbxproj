@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E3382812FDFF11E008ABAA6 /* MapDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3382802FDFF11E008ABAA6 /* MapDependencies.swift */; };
+		7E3382832FDFF602008ABAA6 /* PlayBackVehicleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3382822FDFF602008ABAA6 /* PlayBackVehicleAnnotationView.swift */; };
 		7E3976472FDD1601002837A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39762B2FDD1601002837A8 /* AppDelegate.swift */; };
 		7E3976482FDD1601002837A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E39762D2FDD1601002837A8 /* SceneDelegate.swift */; };
 		7E39764A2FDD1601002837A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E39762C2FDD1601002837A8 /* Assets.xcassets */; };
@@ -144,7 +146,7 @@
 		7ECBDC7E2FDEA2FA00CD9168 /* MapVC+Annotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC7D2FDEA2FA00CD9168 /* MapVC+Annotations.swift */; };
 		7ECBDC802FDEA3C100CD9168 /* MapVC+DataLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC7F2FDEA3C100CD9168 /* MapVC+DataLoading.swift */; };
 		7ECBDC822FDEA48600CD9168 /* MapVC+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC812FDEA48600CD9168 /* MapVC+MKMapViewDelegate.swift */; };
-		7ECBDC842FDEA4EE00CD9168 /* VehicleAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC832FDEA4EE00CD9168 /* VehicleAnnotation.swift */; };
+		7ECBDC842FDEA4EE00CD9168 /* MKAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC832FDEA4EE00CD9168 /* MKAnnotationView.swift */; };
 		7ECBDC862FDEA5E200CD9168 /* SearchVehicleVC+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC852FDEA5E200CD9168 /* SearchVehicleVC+Setup.swift */; };
 		7ECBDC882FDEA61C00CD9168 /* SearchVehicleVC+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC872FDEA61C00CD9168 /* SearchVehicleVC+Header.swift */; };
 		7ECBDC8A2FDEA63D00CD9168 /* SearchVehicleVC+Glass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECBDC892FDEA63D00CD9168 /* SearchVehicleVC+Glass.swift */; };
@@ -164,6 +166,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E3382802FDFF11E008ABAA6 /* MapDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDependencies.swift; sourceTree = "<group>"; };
+		7E3382822FDFF602008ABAA6 /* PlayBackVehicleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayBackVehicleAnnotationView.swift; sourceTree = "<group>"; };
 		7E3975FD2FDCA700002837A8 /* Luminious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Luminious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E39762B2FDD1601002837A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7E39762C2FDD1601002837A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -303,7 +307,7 @@
 		7ECBDC7D2FDEA2FA00CD9168 /* MapVC+Annotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+Annotations.swift"; sourceTree = "<group>"; };
 		7ECBDC7F2FDEA3C100CD9168 /* MapVC+DataLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+DataLoading.swift"; sourceTree = "<group>"; };
 		7ECBDC812FDEA48600CD9168 /* MapVC+MKMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
-		7ECBDC832FDEA4EE00CD9168 /* VehicleAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleAnnotation.swift; sourceTree = "<group>"; };
+		7ECBDC832FDEA4EE00CD9168 /* MKAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKAnnotationView.swift; sourceTree = "<group>"; };
 		7ECBDC852FDEA5E200CD9168 /* SearchVehicleVC+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVehicleVC+Setup.swift"; sourceTree = "<group>"; };
 		7ECBDC872FDEA61C00CD9168 /* SearchVehicleVC+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVehicleVC+Header.swift"; sourceTree = "<group>"; };
 		7ECBDC892FDEA63D00CD9168 /* SearchVehicleVC+Glass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVehicleVC+Glass.swift"; sourceTree = "<group>"; };
@@ -333,6 +337,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E33827E2FDFF10C008ABAA6 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				7E33827F2FDFF114008ABAA6 /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		7E33827F2FDFF114008ABAA6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E3382802FDFF11E008ABAA6 /* MapDependencies.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7E3975F42FDCA700002837A8 = {
 			isa = PBXGroup;
 			children = (
@@ -998,12 +1018,12 @@
 		7E8F4DF42FDD80A70002DDB5 /* DriverMock */ = {
 			isa = PBXGroup;
 			children = (
-				7E6CE86B2FDE820F00F30949 /* Simulation */,
+				7E8F4DF92FDD81020002DDB5 /* DriverGeneration */,
 				7E8F4E0C2FDD85240002DDB5 /* Error */,
 				7E8F4E072FDD83C00002DDB5 /* Model */,
-				7E8F4E022FDD82070002DDB5 /* SessionBootstrap */,
 				7E8F4DFA2FDD813B0002DDB5 /* RouteGeneration */,
-				7E8F4DF92FDD81020002DDB5 /* DriverGeneration */,
+				7E8F4E022FDD82070002DDB5 /* SessionBootstrap */,
+				7E6CE86B2FDE820F00F30949 /* Simulation */,
 			);
 			path = DriverMock;
 			sourceTree = "<group>";
@@ -1097,6 +1117,7 @@
 		7E8F4E222FDDAF040002DDB5 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				7E33827E2FDFF10C008ABAA6 /* Domain */,
 				7E8F4E672FDDD8AB0002DDB5 /* DataSource */,
 				7E8F4E382FDDB00D0002DDB5 /* Navigation */,
 				7E8F4E402FDDB2E50002DDB5 /* Presentation */,
@@ -1221,7 +1242,8 @@
 			isa = PBXGroup;
 			children = (
 				7E8F4E652FDDD8620002DDB5 /* SearchVehicleTableViewCell.swift */,
-				7ECBDC832FDEA4EE00CD9168 /* VehicleAnnotation.swift */,
+				7ECBDC832FDEA4EE00CD9168 /* MKAnnotationView.swift */,
+				7E3382822FDFF602008ABAA6 /* PlayBackVehicleAnnotationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1229,7 +1251,6 @@
 		7ECBDC8F2FDEDBE400CD9168 /* VehicleDetails */ = {
 			isa = PBXGroup;
 			children = (
-				7ECBDC912FDEDC0500CD9168 /* Navigation */,
 				7ECBDC902FDEDBF800CD9168 /* Presentation */,
 			);
 			path = VehicleDetails;
@@ -1244,13 +1265,6 @@
 				7E4DE54A2FDFA4D7009DC860 /* VehicleDetailsViewModel+Extensions */,
 			);
 			path = Presentation;
-			sourceTree = "<group>";
-		};
-		7ECBDC912FDEDC0500CD9168 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Navigation;
 			sourceTree = "<group>";
 		};
 		7ECBDCA32FDF296800CD9168 /* UIView */ = {
@@ -1343,6 +1357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E8F4E092FDD83D10002DDB5 /* VehicleType.swift in Sources */,
+				7E3382812FDFF11E008ABAA6 /* MapDependencies.swift in Sources */,
 				7ECBDC982FDEF8DD00CD9168 /* LocationPermissionStrings.swift in Sources */,
 				7E3976472FDD1601002837A8 /* AppDelegate.swift in Sources */,
 				7E3976482FDD1601002837A8 /* SceneDelegate.swift in Sources */,
@@ -1391,7 +1406,7 @@
 				7E8F4DF62FDD80D30002DDB5 /* DriverGenerationService.swift in Sources */,
 				7E4DE5342FDF9F4D009DC860 /* VehicleDetailsViewModel+Display.swift in Sources */,
 				7E4DE53E2FDFA1E5009DC860 /* VehicleDetailsVC+Bindings.swift in Sources */,
-				7ECBDC842FDEA4EE00CD9168 /* VehicleAnnotation.swift in Sources */,
+				7ECBDC842FDEA4EE00CD9168 /* MKAnnotationView.swift in Sources */,
 				7E3976F12FDD2CF6002837A8 /* ReverseGeocoder.swift in Sources */,
 				7E3976F22FDD2CF6002837A8 /* AnimationType.swift in Sources */,
 				7E8F4DB02FDD52C20002DDB5 /* VehicleRepository.swift in Sources */,
@@ -1442,6 +1457,7 @@
 				7E8F4E5E2FDDD42F0002DDB5 /* SearchVehicleViewModel.swift in Sources */,
 				7E8F4DB42FDD53F00002DDB5 /* Route.swift in Sources */,
 				7ECBDC8C2FDEA65C00CD9168 /* SearchVehicleVC+TableView.swift in Sources */,
+				7E3382832FDFF602008ABAA6 /* PlayBackVehicleAnnotationView.swift in Sources */,
 				7E3977092FDD2CF6002837A8 /* GeocodingService.swift in Sources */,
 				7ECBDCAA2FDF398200CD9168 /* DirectionMapper.swift in Sources */,
 				7E8F4E012FDD81C90002DDB5 /* MKPolyline+Extension.swift in Sources */,

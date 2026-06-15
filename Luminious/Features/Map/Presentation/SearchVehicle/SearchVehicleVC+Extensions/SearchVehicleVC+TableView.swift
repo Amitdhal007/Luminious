@@ -14,7 +14,7 @@ extension SearchVehicleVC {
             SearchVehicleTableViewDataSourceHandler(
                 viewModel: viewModel
             )
-        
+
         tableViewHandler.delegate =
             self
 
@@ -29,7 +29,7 @@ extension SearchVehicleVC {
 
         searchTableView.estimatedRowHeight =
             80
-        
+
         searchTableView.separatorStyle = .none
 
         searchTableView.showsVerticalScrollIndicator =

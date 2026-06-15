@@ -1,9 +1,22 @@
 import Combine
 import UIKit
 
+/// A reusable glass-style text button with loading state support.
+///
+/// Responsibilities:
+/// - Displays a styled button with glass UI
+/// - Emits tap events via Combine
+/// - Manages loading state UI transitions
+///
+/// Design decisions:
+/// - Uses Combine to integrate with reactive MVVM architecture
+/// - Encapsulates loading state internally to prevent misuse from external layers
+///
+/// Assumptions:
+/// - Loading state is transient and controlled by caller via `finishLoading()`
 public final class LiquidGlassTextButton: UIView {
 
-    // MARK: - Public
+    // MARK: - Public API
 
     public var tapPublisher: AnyPublisher<LiquidGlassTextButtonAction, Never> {
         tapSubject.eraseToAnyPublisher()
@@ -13,12 +26,9 @@ public final class LiquidGlassTextButton: UIView {
         CGSize(width: 160, height: 56)
     }
 
-    // MARK: - Private
+    // MARK: - State
 
-    private let tapSubject = PassthroughSubject<
-        LiquidGlassTextButtonAction, Never
-    >()
-
+    private let tapSubject = PassthroughSubject<LiquidGlassTextButtonAction, Never>()
     private var isLoading = false
 
     // MARK: - UI
@@ -32,18 +42,13 @@ public final class LiquidGlassTextButton: UIView {
         return view
     }()
 
-    private let button: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }()
+    private let button = UIButton(type: .system)
 
     private let activityIndicator: UIActivityIndicatorView = {
         let iv = UIActivityIndicatorView(style: .medium)
-        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.color = .white
         iv.hidesWhenStopped = true
-        iv.stopAnimating()
+        iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
 
@@ -55,7 +60,7 @@ public final class LiquidGlassTextButton: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) is not supported")
     }
 
     // MARK: - Layout
@@ -63,13 +68,13 @@ public final class LiquidGlassTextButton: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
 
-        glassEffectView.layer.cornerRadius =
-            min(bounds.width, bounds.height) / 2
+        glassEffectView.layer.cornerRadius = min(bounds.width, bounds.height) / 2
     }
 }
-extension LiquidGlassTextButton {
 
-    private func setupView(text: String) {
+private extension LiquidGlassTextButton {
+
+    func setupView(text: String) {
 
         translatesAutoresizingMaskIntoConstraints = false
 
@@ -79,48 +84,17 @@ extension LiquidGlassTextButton {
             glassEffectView.topAnchor.constraint(equalTo: topAnchor),
             glassEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
             glassEffectView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            glassEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            glassEffectView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
         setupButton(text: text)
         setupLoader()
     }
+}
 
-    private func setupButton(text: String) {
+private extension LiquidGlassTextButton {
 
-        var config = UIButton.Configuration.plain()
-        config.title = text
-        config.baseForegroundColor = .white
-
-        button.configuration = config
-
-        glassEffectView.contentView.addSubview(button)
-
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            button.leadingAnchor.constraint(
-                equalTo: glassEffectView.contentView.leadingAnchor
-            ),
-            button.trailingAnchor.constraint(
-                equalTo: glassEffectView.contentView.trailingAnchor
-            ),
-            button.topAnchor.constraint(
-                equalTo: glassEffectView.contentView.topAnchor
-            ),
-            button.bottomAnchor.constraint(
-                equalTo: glassEffectView.contentView.bottomAnchor
-            )
-        ])
-
-        button.addTarget(
-            self,
-            action: #selector(handleTap),
-            for: .touchUpInside
-        )
-    }
-
-    private func setupLoader() {
+    func setupLoader() {
 
         glassEffectView.contentView.addSubview(activityIndicator)
 
@@ -130,36 +104,59 @@ extension LiquidGlassTextButton {
             ),
             activityIndicator.centerYAnchor.constraint(
                 equalTo: glassEffectView.contentView.centerYAnchor
-            ),
+            )
         ])
     }
 }
+
+private extension LiquidGlassTextButton {
+
+    func setupButton(text: String) {
+
+        var config = UIButton.Configuration.plain()
+        config.title = text
+        config.baseForegroundColor = .white
+
+        button.configuration = config
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        glassEffectView.contentView.addSubview(button)
+
+        NSLayoutConstraint.activate([
+            button.leadingAnchor.constraint(equalTo: glassEffectView.contentView.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: glassEffectView.contentView.trailingAnchor),
+            button.topAnchor.constraint(equalTo: glassEffectView.contentView.topAnchor),
+            button.bottomAnchor.constraint(equalTo: glassEffectView.contentView.bottomAnchor)
+        ])
+
+        button.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
+    }
+}
+
 extension LiquidGlassTextButton {
 
-    @objc private func handleTap() {
+    @objc func handleTap() {
+
         guard !isLoading else { return }
 
-        isLoading = true
-        showLoading(true)
-
+        setLoading(true)
         tapSubject.send(.tapped)
     }
 
-    private func showLoading(_ show: Bool) {
+    func setLoading(_ loading: Bool) {
 
-        if show {
-            button.isHidden = true
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-            button.isHidden = false
-        }
+        isLoading = loading
+
+        button.isEnabled = !loading
+        button.alpha = loading ? 0.0 : 1.0
+
+        loading ? activityIndicator.startAnimating()
+                : activityIndicator.stopAnimating()
     }
 
-    // MARK: - Public control
+    // MARK: - Public API
 
     public func finishLoading() {
-        isLoading = false
-        showLoading(false)
+        setLoading(false)
     }
 }
