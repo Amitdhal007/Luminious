@@ -4,14 +4,11 @@ final class SplashCoordinator: Coordinating {
 
     private let factory: SplashFactory
 
-    private let navigationController:
-        UINavigationController
+    private let navigationController: UINavigationController
 
-    private let onResumeSession:
-        () -> Void
+    private let onResumeSession: () -> Void
 
-    private let onNewSession:
-        (Session) -> Void
+    private let onNewSession: (Session) -> Void
 
     init(
         factory: SplashFactory,
@@ -47,7 +44,8 @@ final class SplashCoordinator: Coordinating {
     }
 }
 extension SplashCoordinator:
-    SplashCoordinating {
+    SplashCoordinating
+{
 
     func splashDidRequestResumeSession() {
 

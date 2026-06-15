@@ -1,20 +1,41 @@
 import Foundation
 
+/// Localization namespace for Vehicle Count Picker screen.
+///
+/// Responsibility:
+/// - Centralizes all user-facing strings for this screen
+/// - Ensures consistency across UI components
+/// - Prepares codebase for localization support
 enum VehicleCountPickerStrings {
 
-    static let title =
-        "Vehicle Configuration"
+    // MARK: - Static Text
 
-    static let message =
-        "Select vehicle count"
+    static let title = NSLocalizedString(
+        "vehicle_count_picker.title",
+        value: "Vehicle Configuration",
+        comment: "Title for vehicle count picker screen"
+    )
 
-    static let cancel =
-        "Cancel"
+    static let message = NSLocalizedString(
+        "vehicle_count_picker.message",
+        value: "Select vehicle count",
+        comment: "Instruction text for selecting number of vehicles"
+    )
 
-    static func vehicleTitle(
-        count: Int
-    ) -> String {
+    static let cancel = NSLocalizedString(
+        "vehicle_count_picker.cancel",
+        value: "Cancel",
+        comment: "Cancel button title"
+    )
 
-        "\(count) Vehicles"
+    // MARK: - Dynamic Text
+
+    /// Returns formatted vehicle count title.
+    ///
+    /// Example:
+    /// - 1 → "1 Vehicle"
+    /// - 3 → "3 Vehicles"
+    static func vehicleTitle(count: Int) -> String {
+        "\(count) \(count == 1 ? "Vehicle" : "Vehicles")"
     }
 }
