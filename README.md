@@ -175,7 +175,7 @@ func mapDidRequestAR() {
 |---|---|
 | macOS | Sequoia 15.0+ |
 | Xcode | **26.2+** (mandatory) |
-| iOS Deployment Target | **26.0+** (mandatory) |
+| iOS Deployment Target | **26.1+** (mandatory) |
 | Swift | 6.0+ |
 
 ### Installation & Run
