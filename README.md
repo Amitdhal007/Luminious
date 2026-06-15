@@ -52,7 +52,7 @@ All data — including sessions, vehicles, routes, and coordinate telemetry — 
 | **Location Engine** | CoreLocation + CLGeocoder (Reverse Geocoding) |
 | **Mapping & Routing** | MapKit — `MKMapView`, `MKDirections`, `MKPolyline` |
 | **Image Loading** | SDWebImage v5.21.7 (via Swift Package Manager) |
-| **Minimum Deployment** | iOS 26.0+ |
+| **Minimum Deployment** | iOS 26.1+ |
 | **Build Toolchain** | Xcode 26.2+ |
 | **Architecture** | Clean Architecture + MVVM-Coordinator (MVVM-C) |
 | **Dependency Manager** | Swift Package Manager (SPM) |
